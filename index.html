@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ullo — 공간·시간 제약 없는 웰니스 플랫폼</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%230A0A0C"/><g fill="%23FFFFFF" transform="translate(75.3,-21.6) scale(3.35)"><path d="M58.86,49.12v33.76c0,10.88-8.93,19.7-19.95,19.7s-19.95-8.82-19.95-19.7V49.12H4.7v33.76h0c0,18.65,15.31,33.76,34.2,33.76s34.2-15.12,34.2-33.76h0V49.12h-14.25Z"/><circle cx="93.1" cy="106.64" r="10"/></g></svg>'>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* ullo 컬러 시스템 v1.2 */
+  --primary:#0064FF;
+  --primary-pressed:#0050D9;
+  --primary-bg:#EBF2FF;
+  --text-primary:#1A1A1A;
+  --text-secondary:#555555;
+  --text-disabled:#AEAEB2;
+  --bg-default:#FFFFFF;
+  --bg-section:#F7F7F8;
+  --skeleton:#EBEBEB;
+  --border-default:#E0E0E0;
+  --border-strong:#C7C7CC;
+  --success:#22C55E;
+  --success-text:#15803D;
+  --warning:#F59E0B;
+  --warning-text:#B45309;
+  --dark:#0A0A0C;
+  --blue-on-dark:#3D8BFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',-apple-system,sans-serif;color:var(--text-primary);background:var(--bg-default);-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+.en{font-family:'Anton',sans-serif;letter-spacing:0.06em;text-transform:uppercase}
+.view[hidden]{display:none}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;padding:17px 36px;transition:background .15s,transform .15s,border-color .15s,box-shadow .15s;border:none}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-pressed);transform:translateY(-2px)}
+.btn-white{background:#fff;color:var(--text-primary)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+.btn-ghost-light{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.45)}
+.btn-ghost-light:hover{border-color:#fff;background:rgba(255,255,255,0.08);transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--text-primary);border:1px solid var(--border-strong)}
+.btn-ghost:hover{border-color:var(--text-primary);transform:translateY(-2px)}
+.btn-sm{padding:10px 18px;font-size:14px;border-radius:8px}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(255,255,255,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border-default)}
+.logo{display:flex;align-items:center}
+.logo svg{height:26px;width:auto;display:block;fill:var(--primary)}
+.nav-btns{display:flex;gap:10px;align-items:center}
+.nav-link{font-size:14px;font-weight:600;color:var(--text-secondary);padding:10px 12px;transition:color .15s}
+.nav-link:hover{color:var(--text-primary)}
+
+/* ===== HERO 공통 ===== */
+.hero{position:relative;color:#fff;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat}
+.hero-inner{position:relative;max-width:1100px;margin:0 auto;width:100%}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--blue-on-dark);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:26px}
+.hero-eyebrow::before{content:'';width:36px;height:2px;background:var(--blue-on-dark)}
+.hero h1 .blue{color:var(--blue-on-dark)}
+.hero p{color:#C9C9D1;line-height:1.75}
+
+/* HERO — 홈 */
+.hero-home{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding:140px 40px 100px}
+.hero-home .hero-bg{background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=2000&q=80&auto=format&fit=crop');filter:grayscale(35%) contrast(1.08);transform:scale(1.05);animation:heroZoom 14s ease-out forwards}
+@keyframes heroZoom{to{transform:scale(1)}}
+.hero-home .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,10,12,0.93) 25%,rgba(10,10,12,0.6) 55%,rgba(0,45,140,0.45) 100%)}
+.hero-home h1{font-size:clamp(38px,6vw,74px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin-bottom:26px}
+.hero-home p{font-size:18px;max-width:540px;margin-bottom:20px}
+.hero-gift{display:inline-flex;align-items:center;gap:10px;background:rgba(0,100,255,0.18);border:1px solid rgba(61,139,255,0.5);color:#fff;font-size:14.5px;font-weight:700;padding:12px 20px;border-radius:10px;margin-bottom:36px}
+.hero-gift em{font-style:normal;color:var(--blue-on-dark);font-weight:800}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+
+/* HERO — 사전 예약 */
+.hero-booking{padding:104px 40px}
+.hero-booking .hero-bg{background-image:url('https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=2000&q=80&auto=format&fit=crop');filter:grayscale(30%) contrast(1.06)}
+.hero-booking .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,10,12,0.92) 30%,rgba(10,10,12,0.55) 65%,rgba(0,80,217,0.5) 100%)}
+.hero-booking h1{font-size:clamp(34px,5.2vw,62px);font-weight:800;line-height:1.14;letter-spacing:-0.02em;margin-bottom:22px}
+.hero-booking p{font-size:17px;max-width:560px;margin-bottom:36px}
+
+/* HERO — 파트너 */
+.hero-partner{padding:160px 40px 100px}
+.hero-partner .hero-bg{background-image:url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=2000&q=80&auto=format&fit=crop');filter:grayscale(40%) contrast(1.08)}
+.hero-partner .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,10,12,0.93) 30%,rgba(10,10,12,0.62) 65%,rgba(0,80,217,0.5) 100%)}
+.hero-partner h1{font-size:clamp(36px,5.6vw,66px);font-weight:800;line-height:1.12;letter-spacing:-0.02em;margin-bottom:24px}
+.hero-partner p{font-size:18px;max-width:560px;margin-bottom:40px}
+.hero-top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.hero-top .hero-eyebrow{margin-bottom:0}
+.hero-badge{display:inline-block;background:#fff;color:var(--text-primary);font-size:14px;font-weight:700;padding:12px 20px;border-radius:10px}
+.hero-badge em{font-style:normal;color:var(--primary);font-weight:800}
+
+/* ===== MARQUEE ===== */
+.marquee{background:var(--primary);overflow:hidden;padding:15px 0;white-space:nowrap}
+.marquee-track{display:inline-block;animation:marquee 28s linear infinite}
+.marquee-track span{font-family:'Anton',sans-serif;font-size:19px;letter-spacing:0.12em;color:#fff;margin:0 26px;text-transform:uppercase}
+.marquee-track span.dot{color:rgba(255,255,255,0.45)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== SECTION 공통 ===== */
+section{padding:100px 40px;scroll-margin-top:62px}
+.inner{max-width:1100px;margin:0 auto}
+.sec-tag{font-size:13px;font-weight:700;letter-spacing:0.2em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.sec-tag::before{content:'';width:28px;height:2px;background:var(--primary)}
+.sec-title{font-size:clamp(28px,4.2vw,46px);font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin-bottom:18px}
+.sec-sub{font-size:17px;color:var(--text-secondary);line-height:1.8;max-width:600px}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== 홈 — 서비스 소개 ===== */
+.uv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.uv-card{background:var(--bg-section);border:1px solid var(--border-default);border-radius:16px;padding:40px 34px;transition:transform .3s ease,box-shadow .3s ease}
+.uv-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(26,26,26,0.08)}
+.uv-num{font-family:'Anton',sans-serif;font-size:15px;color:var(--primary);letter-spacing:0.15em;margin-bottom:22px}
+.uv-card h3{font-size:21px;font-weight:800;margin-bottom:14px;line-height:1.4}
+.uv-card p{font-size:15px;color:var(--text-secondary);line-height:1.8}
+
+/* ===== 홈 — 비교 ===== */
+.compare-sec{background:var(--bg-section);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.uv-compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.uvc{padding:44px 40px;border-radius:16px}
+.uvc.old{background:#fff;border:1px solid var(--border-default)}
+.uvc.new{background:var(--primary);color:#fff}
+.uvc .uvc-tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:0.12em;padding:7px 16px;border-radius:8px;margin-bottom:24px}
+.uvc.old .uvc-tag{background:var(--skeleton);color:var(--text-secondary)}
+.uvc.new .uvc-tag{background:#fff;color:var(--primary)}
+.uvc h4{font-size:23px;font-weight:800;margin-bottom:20px;letter-spacing:-0.01em}
+.uvc ul{list-style:none}
+.uvc li{font-size:15px;line-height:1.6;padding:12px 0;display:flex;gap:12px;align-items:flex-start}
+.uvc.old li{color:var(--text-secondary);border-top:1px solid var(--border-default)}
+.uvc.new li{color:rgba(255,255,255,0.95);border-top:1px solid rgba(255,255,255,0.25)}
+.uvc li::before{flex:none;font-weight:900;font-size:14px;margin-top:2px}
+.uvc.old li::before{content:'✕';color:#B91C1C}
+.uvc.new li::before{content:'✓';color:#fff}
+.uv-slogan{margin-top:28px;background:var(--text-primary);color:#fff;border-radius:16px;padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.uv-slogan h3{font-size:clamp(21px,2.8vw,30px);font-weight:800;line-height:1.4;letter-spacing:-0.01em}
+.uv-slogan h3 em{font-style:normal;color:var(--blue-on-dark)}
+
+/* ===== 홈 — 사전 예약 혜택 ===== */
+.prereg-sec{background:var(--primary-bg)}
+.prereg-card{display:grid;grid-template-columns:1.1fr 1fr;gap:0;margin-top:56px;border-radius:20px;overflow:hidden;background:#fff;border:1px solid #D5E4FF;box-shadow:0 24px 60px rgba(0,100,255,0.1)}
+.prereg-left{padding:64px 56px}
+.prereg-badge{display:inline-block;background:var(--primary);color:#fff;font-size:14px;font-weight:800;letter-spacing:0.08em;padding:10px 20px;border-radius:8px;margin-bottom:28px}
+.prereg-left h3{font-size:clamp(26px,3.2vw,38px);font-weight:800;line-height:1.3;margin-bottom:18px;letter-spacing:-0.015em}
+.prereg-left h3 em{font-style:normal;color:var(--primary)}
+.prereg-left p{font-size:16.5px;color:var(--text-secondary);line-height:1.85;margin-bottom:32px}
+.prereg-steps{list-style:none;margin-bottom:36px}
+.prereg-steps li{display:flex;gap:14px;align-items:flex-start;padding:12px 0;font-size:15px;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border-default)}
+.prereg-steps li:last-child{border-bottom:1px solid var(--border-default)}
+.prereg-steps .pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.prereg-steps strong{color:var(--text-primary)}
+.prereg-right{background:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=75&auto=format&fit=crop') center/cover no-repeat;min-height:420px;position:relative}
+.prereg-right::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,80,217,0.15),rgba(0,100,255,0.3))}
+
+/* ===== 홈 — 파트너 모집 (다크) ===== */
+.partner-sec{background:var(--dark);color:#fff;padding:110px 40px}
+.partner-sec .sec-tag{color:var(--blue-on-dark)}
+.partner-sec .sec-tag::before{background:var(--blue-on-dark)}
+.partner-sec .sec-title{color:#fff}
+.partner-sec .sec-sub{color:#9A9AA3}
+.partner-badge{display:inline-block;background:#fff;color:var(--text-primary);font-size:15px;font-weight:700;padding:14px 24px;border-radius:10px;margin:40px 0 0}
+.partner-badge em{font-style:normal;color:var(--primary);font-weight:800}
+.pt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+.pt-card{background:#16161C;border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:36px 30px;transition:transform .3s ease,border-color .3s ease}
+.pt-card:hover{transform:translateY(-6px);border-color:rgba(61,139,255,0.5)}
+.pt-num{font-family:'Anton',sans-serif;font-size:14px;color:var(--blue-on-dark);letter-spacing:0.15em;margin-bottom:20px}
+.pt-card h3{font-size:19px;font-weight:800;margin-bottom:12px;color:#fff}
+.pt-card p{font-size:14.5px;color:#9A9AA3;line-height:1.8}
+.sim-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start;margin-top:80px;padding-top:72px;border-top:1px solid rgba(255,255,255,0.1)}
+.sim-head h3{font-size:clamp(24px,3vw,34px);font-weight:800;color:#fff;line-height:1.25;margin-bottom:14px;letter-spacing:-0.015em}
+.sim-head p{font-size:15.5px;color:#9A9AA3;line-height:1.75}
+.sim-card{background:#16161C;border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:44px}
+.sim-row{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+.sim-label{font-size:14px;color:#9A9AA3;min-width:130px}
+.sim-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:rgba(255,255,255,0.14);outline:none;cursor:pointer;border-radius:2px}
+.sim-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue-on-dark);cursor:pointer;border:3px solid #16161C;box-shadow:0 0 0 1px var(--blue-on-dark)}
+.sim-val{font-size:16px;font-weight:800;min-width:70px;text-align:right;color:#fff}
+.sim-divider{border:none;border-top:1px solid rgba(255,255,255,0.1);margin:30px 0}
+.sim-result-label{font-size:13px;letter-spacing:0.18em;color:#9A9AA3;margin-bottom:10px;font-weight:700}
+.sim-result-num{font-size:clamp(36px,4.6vw,50px);font-weight:800;color:var(--blue-on-dark);letter-spacing:-0.02em}
+.sim-result-sub{font-size:13px;color:#6E6E78;margin-top:10px}
+.sim-note{font-size:12px;color:#5A5A64;margin-top:24px;line-height:1.7}
+.partner-cta{margin-top:72px;text-align:center}
+.partner-cta .btn{min-width:260px}
+.partner-cta p{font-size:13px;color:#6E6E78;margin-top:16px}
+
+/* ===== CTA (photo) ===== */
+.cta-sec{position:relative;padding:130px 40px;text-align:center;overflow:hidden;color:#fff}
+.cta-bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat;filter:grayscale(45%)}
+.cta-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,80,217,0.8),rgba(10,10,12,0.92))}
+.cta-home .cta-bg{background-image:url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=2000&q=80&auto=format&fit=crop')}
+.cta-booking .cta-bg{background-image:url('https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=2000&q=80&auto=format&fit=crop')}
+.cta-inner{position:relative;max-width:780px;margin:0 auto}
+.cta-inner .en-line{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:0.3em;color:var(--blue-on-dark);margin-bottom:22px}
+.cta-inner h2{font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.18;margin-bottom:16px}
+.cta-inner p{font-size:17px;color:#C9C9D1;margin-bottom:40px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-note{font-size:13px;color:rgba(255,255,255,0.55);margin-top:18px}
+
+/* ===== 사전 예약 — EVENT BAR ===== */
+.event-bar{margin-top:61px;background:var(--text-primary);color:#fff;text-align:center;padding:13px 20px;font-size:14px;font-weight:700}
+.event-bar em{font-style:normal;color:var(--blue-on-dark)}
+
+/* ===== 사전 예약 — 신청 ===== */
+.reg-sec{background:var(--primary-bg)}
+.reg-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:stretch}
+.reg-wrap > div:first-child{display:flex;flex-direction:column}
+.reg-benefit{background:var(--primary);color:#fff;border-radius:16px;padding:36px 34px;margin-top:auto}
+.reg-benefit .rb-tag{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:0.2em;color:rgba(255,255,255,0.75);margin-bottom:12px;text-transform:uppercase}
+.reg-benefit h3{font-size:24px;font-weight:800;line-height:1.4;margin-bottom:12px}
+.reg-benefit p{font-size:14.5px;color:rgba(255,255,255,0.88);line-height:1.8}
+.reg-steps{list-style:none;margin-top:36px;margin-bottom:40px}
+.reg-steps li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;font-size:15px;color:var(--text-secondary);line-height:1.8;border-top:1px solid #D5E4FF}
+.reg-steps li:last-child{border-bottom:1px solid #D5E4FF}
+.reg-steps .pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.reg-steps strong{color:var(--text-primary)}
+
+/* ===== 폼 공통 ===== */
+.form-card{background:#fff;border:1px solid #D5E4FF;border-radius:20px;padding:48px;box-shadow:0 24px 60px rgba(0,100,255,0.1);display:flex;flex-direction:column}
+.form-card form{display:flex;flex-direction:column;flex:1}
+.form-card h3{font-size:24px;font-weight:800;margin-bottom:8px}
+.form-card .form-desc{font-size:14px;color:var(--text-secondary);margin-bottom:32px;line-height:1.7}
+.form-card .form-desc em{font-style:normal;color:var(--primary);font-weight:700}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f-group{margin-bottom:20px}
+.f-group label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.f-group label em{font-style:normal;color:var(--primary)}
+.f-group input,.f-group select,.f-group textarea{width:100%;border:1px solid var(--border-default);border-radius:8px;padding:14px 16px;font-size:16px;font-family:inherit;color:var(--text-primary);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+.f-group input::placeholder,.f-group textarea::placeholder{color:var(--text-disabled)}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(0,100,255,0.3)}
+.f-group textarea{resize:vertical;min-height:100px}
+.f-grow{flex:1;display:flex;flex-direction:column}
+.f-grow textarea{flex:1}
+.f-agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);line-height:1.6;margin:24px 0}
+.f-agree input{margin-top:3px;accent-color:var(--primary);width:16px;height:16px}
+.f-submit{width:100%;padding:18px}
+.form-success{display:none;flex:1;flex-direction:column;justify-content:center;text-align:center;padding:40px 20px}
+.form-success .fs-icon{width:64px;height:64px;border-radius:50%;background:var(--success);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.form-success h3{font-size:24px;font-weight:800;margin-bottom:12px}
+.form-success p{font-size:15px;color:var(--text-secondary);line-height:1.8}
+.form-success p em{font-style:normal;color:var(--primary);font-weight:800}
+
+/* ===== 사전 예약 — COMING SOON ===== */
+.soon-sec{background:var(--bg-section);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.soon-banner{display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.14);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:18px 24px;margin-top:44px}
+.soon-banner .sb-dot{width:10px;height:10px;border-radius:50%;background:var(--warning);flex:none;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.soon-banner p{font-size:14.5px;font-weight:700;color:var(--warning-text);line-height:1.6}
+.soon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
+.soon-card{background:#fff;border:1px dashed var(--border-strong);border-radius:16px;padding:28px;display:flex;flex-direction:column}
+.soon-img{height:150px;border-radius:10px;background:var(--skeleton);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.soon-img span{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:0.2em;color:var(--text-disabled)}
+.soon-line{height:12px;border-radius:4px;background:var(--skeleton);margin-bottom:10px}
+.soon-cat{display:inline-flex;align-self:flex-start;font-size:12px;font-weight:800;background:var(--primary-bg);color:var(--primary);padding:5px 12px;border-radius:6px;margin-bottom:16px}
+
+/* ===== HOW / PROCESS 공통 ===== */
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.how-step{border:1px solid var(--border-default);background:#fff;border-radius:16px;padding:40px 32px;transition:transform .3s ease,box-shadow .3s ease}
+.how-step:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(26,26,26,0.08)}
+.step-num{font-family:'Anton',sans-serif;font-size:48px;color:transparent;-webkit-text-stroke:1.2px var(--primary);margin-bottom:24px}
+.how-step h3{font-size:18px;font-weight:800;margin-bottom:12px}
+.how-step p{font-size:14.5px;color:var(--text-secondary);line-height:1.8}
+
+/* ===== 파트너 — TRUST ===== */
+.trust{background:var(--primary-bg);border-bottom:1px solid #D5E4FF}
+.trust-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.trust-item{padding:34px 28px;border-right:1px solid #D5E4FF}
+.trust-item:last-child{border-right:none}
+.trust-item .t-num{font-size:26px;font-weight:800;color:var(--primary);letter-spacing:-0.01em}
+.trust-item .t-label{font-size:13px;color:var(--text-secondary);margin-top:6px;line-height:1.5}
+
+/* ===== 파트너 — VALUE ===== */
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.val-card{background:var(--bg-section);border:1px solid var(--border-default);border-radius:16px;padding:40px 34px;transition:transform .3s ease,box-shadow .3s ease}
+.val-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(26,26,26,0.08)}
+.val-num{font-family:'Anton',sans-serif;font-size:15px;color:var(--primary);letter-spacing:0.15em;margin-bottom:22px}
+.val-card h3{font-size:20px;font-weight:800;margin-bottom:14px;line-height:1.4}
+.val-card p{font-size:15px;color:var(--text-secondary);line-height:1.8}
+
+/* ===== 파트너 — FORM 좌측 ===== */
+.form-sec{background:var(--primary-bg)}
+.form-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:stretch}
+.form-side{display:flex;flex-direction:column}
+.form-side .benefit-note{margin-top:auto;background:var(--primary);color:#fff;border-radius:16px;padding:34px 32px}
+.form-side .benefit-note .bn-tag{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:0.2em;color:rgba(255,255,255,0.75);margin-bottom:12px;text-transform:uppercase}
+.form-side .benefit-note h3{font-size:24px;font-weight:800;line-height:1.35;margin-bottom:10px}
+.form-side .benefit-note p{font-size:14px;color:rgba(255,255,255,0.88);line-height:1.7}
+.form-side .checklist{margin-top:36px;margin-bottom:40px;list-style:none}
+.form-side .checklist li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--text-secondary);line-height:1.6;padding:11px 0;border-top:1px solid #D5E4FF}
+.form-side .checklist li::before{content:'✓';color:var(--primary);font-weight:900;flex:none}
+
+/* ===== 파트너 — FAQ ===== */
+.faq-sec{background:var(--bg-section);border-top:1px solid var(--border-default)}
+.faq-list{margin-top:48px;border-top:2px solid var(--text-primary)}
+.faq-item{border-bottom:1px solid var(--border-default)}
+.faq-q{width:100%;background:none;border:none;font-family:inherit;text-align:left;font-size:17px;font-weight:800;color:var(--text-primary);padding:26px 8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q .q-mark{font-family:'Anton',sans-serif;color:var(--primary);font-size:18px;flex:none}
+.faq-q .q-text{flex:1}
+.faq-q .q-toggle{font-size:22px;color:var(--text-disabled);transition:transform .3s;flex:none}
+.faq-item.open .q-toggle{transform:rotate(45deg);color:var(--primary)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{font-size:15px;color:var(--text-secondary);line-height:1.8;padding:0 8px 28px 40px}
+
+/* ===== FOOTER (공통) ===== */
+footer{background:var(--bg-section);border-top:1px solid var(--border-default);padding:56px 40px 40px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.footer-logo{display:inline-flex;align-items:center}
+.footer-logo svg{height:24px;width:auto;display:block;fill:var(--primary)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:14px;font-weight:600;color:var(--text-secondary);transition:color .15s}
+.footer-links a:hover{color:var(--text-primary)}
+.footer-biz{border-top:1px solid var(--border-default);padding-top:28px;font-size:13px;color:var(--text-disabled);line-height:2}
+.footer-biz strong{color:var(--text-secondary);font-weight:600}
+.footer-biz .sep{margin:0 10px;color:var(--border-strong)}
+.footer-copy{margin-top:18px;font-size:12.5px;color:var(--text-disabled)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .uv-grid,.pt-grid,.val-grid,.how-steps{grid-template-columns:1fr}
+  .uv-compare,.prereg-card{grid-template-columns:1fr}
+  .prereg-right{min-height:260px;order:-1}
+  .sim-wrap,.reg-wrap,.form-wrap{grid-template-columns:1fr;gap:40px}
+  .soon-grid{grid-template-columns:1fr 1fr}
+  .trust-grid{grid-template-columns:1fr 1fr}
+  .trust-item{border-bottom:1px solid #D5E4FF}
+  .trust-item:nth-child(even){border-right:none}
+  .trust-item:nth-child(n+3){border-bottom:none}
+}
+@media(max-width:680px){
+  nav{padding:10px 16px}
+  .nav-link{display:none}
+  .hero-home{padding:130px 24px 90px}
+  .hero-booking{padding:84px 24px 70px}
+  .hero-partner{padding:130px 24px 80px}
+  .hero p{font-size:16px}
+  section,.partner-sec{padding:76px 24px}
+  .prereg-left{padding:40px 28px}
+  .cta-sec{padding:96px 24px}
+  .sim-card{padding:28px 22px}
+  .sim-row{flex-wrap:wrap}
+  .sim-label{min-width:100%}
+  .uv-slogan{padding:32px 26px}
+  .form-card{padding:30px 22px}
+  .f-row{grid-template-columns:1fr}
+  .soon-grid{grid-template-columns:1fr}
+  .trust-item{padding:26px 20px}
+  .trust-item .t-num{font-size:22px}
+  footer{padding:44px 24px 32px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 로고 (재사용 템플릿) ===== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ullo-logo" viewBox="0 0 230.5 120">
+    <path d="M58.86,49.12v33.76c0,10.88-8.93,19.7-19.95,19.7s-19.95-8.82-19.95-19.7V49.12H4.7v33.76h0c0,18.65,15.31,33.76,34.2,33.76s34.2-15.12,34.2-33.76h0V49.12h-14.25Z"/>
+    <path d="M189.63,44.31c-19.97,0-36.17,16.19-36.17,36.17s16.19,36.17,36.17,36.17,36.17-16.19,36.17-36.17-16.19-36.17-36.17-36.17Zm0,58.32c-12.23,0-22.15-9.92-22.15-22.15s9.92-22.15,22.15-22.15,22.15,9.92,22.15,22.15-9.92,22.15-22.15,22.15Z"/>
+    <rect x="91.21" y="3.35" width="14.01" height="113.29"/>
+    <rect x="125.24" y="3.35" width="14.01" height="113.29"/>
+  </symbol>
+</svg>
+
+<!-- ===== NAV (공통) ===== -->
+<nav>
+  <a class="logo" href="#service" aria-label="ullo 홈"><svg viewBox="0 0 230.5 120"><use href="#ullo-logo"/></svg></a>
+  <div class="nav-btns">
+    <a class="nav-link" href="#service">서비스 소개</a>
+    <a class="nav-link" href="#partner-intro">파트너 모집</a>
+    <a class="btn btn-ghost btn-sm" href="#partner">파트너 신청</a>
+    <a class="btn btn-primary btn-sm" href="#booking">사전 예약</a>
+  </div>
+</nav>
+
+<!-- ════════════════ VIEW : 홈 ════════════════ -->
+<div id="view-home" class="view">
+
+  <!-- ① HERO -->
+  <header class="hero hero-home">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Wellness Pass Platform</div>
+      <h1>
+        내가 있는 곳에서,<br>
+        원하는 시간에<br>
+        <span class="blue">원하는 운동을 하세요</span>
+      </h1>
+      <p>ullo는 공간과 시간의 제약이 없는 크레딧 기반 웰니스 패스 플랫폼입니다.<br>운동하는 만큼만 쓰고, 가격은 정기권 그대로.</p>
+      <div class="hero-gift">🎁 지금 사전 예약하면 앱 출시 시 <em>무료 크레딧 증정</em></div>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#booking">사전 예약하고 무료 크레딧 받기</a>
+        <a class="btn btn-ghost-light" href="#service">서비스 알아보기</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Gym</span><span class="dot">/</span><span>CrossFit</span><span class="dot">/</span><span>Pilates</span><span class="dot">/</span><span>Yoga</span><span class="dot">/</span><span>Climbing</span><span class="dot">/</span><span>Boxing</span><span class="dot">/</span><span>Swimming</span><span class="dot">/</span><span>Running</span><span class="dot">/</span>
+      <span>Gym</span><span class="dot">/</span><span>CrossFit</span><span class="dot">/</span><span>Pilates</span><span class="dot">/</span><span>Yoga</span><span class="dot">/</span><span>Climbing</span><span class="dot">/</span><span>Boxing</span><span class="dot">/</span><span>Swimming</span><span class="dot">/</span><span>Running</span><span class="dot">/</span>
+    </div>
+  </div>
+
+  <!-- ② 서비스 소개 -->
+  <section id="service">
+    <div class="inner">
+      <div class="sec-tag reveal">For You</div>
+      <h2 class="sec-title reveal">운동하는 만큼만 쓰세요.<br>가격은 정기권 그대로.</h2>
+      <p class="sec-sub reveal">정기권도, 횟수권도 아닙니다. 월결제 후 크레딧을 소모하는 방식이라 필요한 만큼만, 할인된 금액으로 이용할 수 있습니다.</p>
+      <div class="uv-grid">
+        <div class="uv-card reveal">
+          <div class="uv-num">01 — ANYWHERE</div>
+          <h3>내가 있는 곳이<br>나의 운동 공간</h3>
+          <p>집 근처, 회사 근처, 여행지까지. 한 시설에 묶이지 않고 지금 내가 있는 장소에서 가장 가까운 파트너 시설을 선택하세요.</p>
+        </div>
+        <div class="uv-card reveal">
+          <div class="uv-num">02 — ANYTIME</div>
+          <h3>원하는 시간대에<br>원하는 운동을</h3>
+          <p>헬스, 크로스핏, 필라테스, 요가, 클라이밍까지. 고정된 수업 시간표에 맞추지 말고 내 일정에 맞는 시간대를 골라 예약하세요.</p>
+        </div>
+        <div class="uv-card reveal">
+          <div class="uv-num">03 — PAY AS YOU GO</div>
+          <h3>버려지는<br>정기권 비용 0원</h3>
+          <p>안 가는 날에도 빠져나가는 정기권·횟수권과 달리, ullo는 크레딧을 쓴 만큼만 차감됩니다. 운동한 만큼만 지불하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 비교 -->
+  <section class="compare-sec">
+    <div class="inner">
+      <div class="sec-tag reveal">Why Different</div>
+      <h2 class="sec-title reveal">정기권과 무엇이 다른가요?</h2>
+      <div class="uv-compare">
+        <div class="uvc old reveal">
+          <span class="uvc-tag">기존 정기권 · 횟수권</span>
+          <h4>안 가도 돈이 나갑니다</h4>
+          <ul>
+            <li>한 달에 몇 번 못 가도 같은 금액 결제</li>
+            <li>등록한 한 시설에서만 이용 가능</li>
+            <li>고정된 시간표에 내 일정을 맞춰야 함</li>
+            <li>남은 횟수는 기한이 지나면 소멸</li>
+          </ul>
+        </div>
+        <div class="uvc new reveal">
+          <span class="uvc-tag">ullo 크레딧</span>
+          <h4>쓴 만큼만, 같은 가격으로</h4>
+          <ul>
+            <li>월결제 후 크레딧 소모 — 운동한 만큼만 차감</li>
+            <li>모든 파트너 시설을 하나의 멤버십으로</li>
+            <li>내가 원하는 시간대를 직접 골라 예약</li>
+            <li>정기권 수준으로 할인된 크레딧 단가</li>
+          </ul>
+        </div>
+      </div>
+      <div class="uv-slogan reveal">
+        <h3>"운동하는 만큼만 돈을 쓰세요.<br>단, <em>정기권과 같은 금액</em>으로."</h3>
+        <a class="btn btn-primary" href="#booking">사전 예약 하러가기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 사전 예약 혜택 -->
+  <section class="prereg-sec" id="prereg">
+    <div class="inner">
+      <div class="sec-tag reveal">Pre-Registration</div>
+      <h2 class="sec-title reveal">출시 전, 사전 예약 혜택</h2>
+      <p class="sec-sub reveal">ullo는 현재 앱 출시를 준비하고 있습니다. 사전 예약에 참여하면 가장 먼저, 가장 큰 혜택으로<br>시작할 수 있어요.</p>
+      <div class="prereg-card reveal">
+        <div class="prereg-left">
+          <span class="prereg-badge">🎁 사전 예약 혜택</span>
+          <h3>사전 예약 후 가입하면<br><em>무료 크레딧 증정</em></h3>
+          <p>사전 예약 시 기입한 정보로 앱 출시 후 가입하면 무료 크레딧을 드립니다. 첫 운동을 부담 없이 시작해보세요.</p>
+          <ul class="prereg-steps">
+            <li><span class="pn">1</span><span><strong>사전 예약 신청</strong> — 이름과 연락처를 남겨주세요</span></li>
+            <li><span class="pn">2</span><span><strong>앱 출시 알림</strong> — 출시되면 가장 먼저 알려드려요</span></li>
+            <li><span class="pn">3</span><span><strong>기입한 정보로 가입</strong> — 무료 크레딧이 자동 지급돼요</span></li>
+          </ul>
+          <a class="btn btn-primary" href="#register">사전 예약 신청하기</a>
+        </div>
+        <div class="prereg-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ 파트너 모집 -->
+  <section class="partner-sec" id="partner-intro">
+    <div class="inner">
+      <div class="sec-tag reveal">For Partners</div>
+      <h2 class="sec-title reveal">공간을 운영하시나요?<br>빈 시간대가 수익이 됩니다</h2>
+      <p class="sec-sub reveal">헬스장, 필라테스, 요가 스튜디오, 클라이밍짐 — 입점 비용 없이 운동에 진심인 신규 고객을 만나세요. 기존 회원과 운영 방식은 그대로 유지됩니다.</p>
+      <div class="partner-badge reveal">🤝 오픈 파트너 혜택 — 첫 <em>1개월 수수료 5% 할인</em></div>
+      <div class="pt-grid">
+        <div class="pt-card reveal">
+          <div class="pt-num">01 — NEW MEMBERS</div>
+          <h3>신규 고객 유입</h3>
+          <p>크레딧을 보유한, 방문 의지가 확실한 고객이 직접 시설을 검색하고 찾아옵니다. 별도 광고 없이.</p>
+        </div>
+        <div class="pt-card reveal">
+          <div class="pt-num">02 — EMPTY SLOTS</div>
+          <h3>빈 시간대만 채우는 수익</h3>
+          <p>받고 싶은 요일·시간·인원을 직접 설정하세요. 기존 회원의 자리를 침범하지 않습니다.</p>
+        </div>
+        <div class="pt-card reveal">
+          <div class="pt-num">03 — PAYOUT</div>
+          <h3>월 1회 투명 정산</h3>
+          <p>크레딧 사용 내역이 자동으로 집계되고, 정산 금액은 매월 1회 입금됩니다. 수익은 대시보드에서 실시간으로 확인하세요.</p>
+        </div>
+      </div>
+
+      <!-- 수익 시뮬레이터 -->
+      <div class="sim-wrap">
+        <div class="sim-head">
+          <div class="sec-tag reveal">Revenue Simulator</div>
+          <h3 class="reveal">예상 수익을 계산해보세요</h3>
+          <p class="reveal">월 방문 횟수와 크레딧 단가를 조정하면 예상 정산 금액을 바로 확인할 수 있습니다.</p>
+        </div>
+        <div class="sim-card reveal">
+          <div class="sim-row">
+            <span class="sim-label">월 ullo 방문 횟수</span>
+            <input type="range" class="sim-slider" id="visits" min="10" max="200" step="5" value="50">
+            <span class="sim-val" id="visits-val">50회</span>
+          </div>
+          <div class="sim-row">
+            <span class="sim-label">1회 소요 크레딧</span>
+            <input type="range" class="sim-slider" id="credits" min="1" max="50" step="1" value="2">
+            <span class="sim-val" id="credits-val">2개</span>
+          </div>
+          <div class="sim-row">
+            <span class="sim-label">적용 수수료율</span>
+            <input type="range" class="sim-slider" id="fee" min="15" max="20" step="1" value="20">
+            <span class="sim-val" id="fee-val">20%</span>
+          </div>
+          <hr class="sim-divider">
+          <div class="sim-result">
+            <div class="sim-result-label en">Monthly Payout</div>
+            <div class="sim-result-num" id="result">270,000원</div>
+            <div class="sim-result-sub" id="result-sub">50회 × 2크레딧 × 3,000원 × (1 - 20%)</div>
+          </div>
+          <p class="sim-note">※ 크레딧 1개 = 3,000원 기준 / 실제 정산 금액은 운영 조건에 따라 달라질 수 있습니다</p>
+        </div>
+      </div>
+
+      <div class="partner-cta reveal">
+        <a class="btn btn-primary" href="#partner">파트너 입점 신청하기</a>
+        <p>담당자가 영업일 기준 1–2일 내에 연락드립니다</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 최종 CTA -->
+  <div class="cta-sec cta-home">
+    <div class="cta-bg"></div>
+    <div class="cta-inner">
+      <div class="en-line">Coming Soon</div>
+      <h2>곧 만나요.<br>준비는 지금부터.</h2>
+      <p>사전 예약하고 출시 소식과 무료 크레딧을 가장 먼저 받아보세요.</p>
+      <div class="cta-btns">
+        <a class="btn btn-white" href="#booking">사전 예약하기</a>
+        <a class="btn btn-primary" href="#partner">파트너 신청하기</a>
+      </div>
+      <p class="cta-note">사전 예약 시 기입한 정보로 가입하면 무료 크레딧이 지급됩니다</p>
+    </div>
+  </div>
+
+</div><!-- /view-home -->
+
+<!-- ════════════════ VIEW : 사전 예약 ════════════════ -->
+<div id="view-booking" class="view" hidden>
+
+  <!-- EVENT BAR -->
+  <div class="event-bar">🎁 사전 예약 후 기입한 정보로 가입하면 <em>무료 크레딧을 증정</em>합니다</div>
+
+  <!-- HERO -->
+  <header class="hero hero-booking">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Pre-Registration</div>
+      <h1>가장 먼저 만나는 ullo,<br><span class="blue">무료 크레딧으로 시작하세요</span></h1>
+      <p>ullo 앱은 현재 출시를 준비하고 있습니다. 지금 사전 예약하면 출시 소식을<br>가장 먼저 받고, 가입 시 무료 크레딧이 지급됩니다.</p>
+      <a class="btn btn-primary" href="#register">사전 예약 신청하기</a>
+    </div>
+  </header>
+
+  <!-- 사전 예약 신청 -->
+  <section class="reg-sec" id="register">
+    <div class="inner">
+      <div class="reg-wrap">
+        <div>
+          <div class="sec-tag reveal">Free Credit</div>
+          <h2 class="sec-title reveal">사전 예약,<br>이렇게 진행돼요</h2>
+          <p class="sec-sub reveal">지금 남긴 정보가 곧 혜택이 됩니다. 앱 출시 후 같은 정보로 가입만 하면 끝이에요.</p>
+          <ul class="reg-steps reveal">
+            <li><span class="pn">1</span><span><strong>사전 예약 신청</strong> — 이름과 연락처, 관심 운동을 남겨주세요</span></li>
+            <li><span class="pn">2</span><span><strong>앱 출시 알림</strong> — 다운로드가 열리면 가장 먼저 알려드려요</span></li>
+            <li><span class="pn">3</span><span><strong>기입한 정보로 가입</strong> — 사전 예약 정보와 일치하면 무료 크레딧이 자동 지급돼요</span></li>
+          </ul>
+          <div class="reg-benefit reveal">
+            <div class="rb-tag">Launch Benefit</div>
+            <h3>사전 예약 후 가입 시<br>무료 크레딧 증정 🎁</h3>
+            <p>증정 크레딧은 출시 후 모든 파트너 시설에서 사용할 수 있습니다. 첫 운동을 부담 없이 시작해보세요.</p>
+          </div>
+        </div>
+        <div class="form-card reveal">
+          <form id="prereg-form">
+            <h3>사전 예약 신청서</h3>
+            <p class="form-desc">아래 정보로 출시 후 가입하면 <em>무료 크레딧이 지급</em>됩니다. 정확하게 입력해주세요. (<em>*</em> 필수)</p>
+            <div class="f-row">
+              <div class="f-group">
+                <label>이름 <em>*</em></label>
+                <input type="text" name="name" placeholder="예) 홍길동" required>
+              </div>
+              <div class="f-group">
+                <label>휴대폰 번호 <em>*</em></label>
+                <input type="tel" name="phone" placeholder="010-0000-0000" required>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>이메일</label>
+                <input type="email" name="email" placeholder="hello@example.com">
+              </div>
+              <div class="f-group">
+                <label>주 활동 지역</label>
+                <input type="text" name="region" placeholder="예) 서울 마포구">
+              </div>
+            </div>
+            <div class="f-group">
+              <label>관심 있는 운동</label>
+              <select name="interest">
+                <option value="">선택해주세요</option>
+                <option>헬스 / 피트니스</option>
+                <option>크로스핏</option>
+                <option>필라테스</option>
+                <option>요가</option>
+                <option>클라이밍</option>
+                <option>복싱 / 격투기</option>
+                <option>수영</option>
+                <option>라켓류 (테니스·배드민턴 등)</option>
+                <option>하이록스</option>
+                <option>F45</option>
+                <option>바레</option>
+                <option>기타</option>
+              </select>
+            </div>
+            <div class="f-group f-grow">
+              <label>문의사항</label>
+              <textarea name="message" placeholder="궁금한 점이나 바라는 점을 자유롭게 적어주세요"></textarea>
+            </div>
+            <label class="f-agree">
+              <input type="checkbox" required>
+              <span>개인정보 수집 및 이용에 동의합니다. 수집된 정보는 앱 출시 안내와 사전 예약 혜택(무료 크레딧) 지급 목적으로만 사용됩니다. <em style="color:var(--primary);font-style:normal">*</em></span>
+            </label>
+            <button type="submit" class="btn btn-primary f-submit">사전 예약 완료하기</button>
+          </form>
+          <div class="form-success" id="prereg-success">
+            <div class="fs-icon">✓</div>
+            <h3>사전 예약이 완료되었습니다!</h3>
+            <p>앱이 출시되면 가장 먼저 알려드릴게요.<br>출시 후 <em>기입하신 정보로 가입하면 무료 크레딧</em>이<br>자동으로 지급됩니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMING SOON 시설 -->
+  <section class="soon-sec">
+    <div class="inner">
+      <div class="sec-tag reveal">Partner Facilities</div>
+      <h2 class="sec-title reveal">함께할 시설들을 준비하고 있어요</h2>
+      <p class="sec-sub reveal">헬스, 크로스핏, 필라테스, 요가, 클라이밍, 수영 — 다양한 카테고리의 파트너 시설이 입점을 준비 중입니다.</p>
+      <div class="soon-banner reveal">
+        <span class="sb-dot"></span>
+        <p>현재 파트너 시설 입점 협의가 진행 중입니다. 이용 가능한 시설은 확정되는 대로 이 페이지와 앱에서 공개됩니다.</p>
+      </div>
+      <div class="soon-grid">
+        <div class="soon-card reveal">
+          <div class="soon-img"><span>Coming Soon</span></div>
+          <span class="soon-cat">헬스 / 피트니스</span>
+          <div class="soon-line" style="width:70%"></div>
+          <div class="soon-line" style="width:45%"></div>
+        </div>
+        <div class="soon-card reveal">
+          <div class="soon-img"><span>Coming Soon</span></div>
+          <span class="soon-cat">필라테스 / 요가</span>
+          <div class="soon-line" style="width:65%"></div>
+          <div class="soon-line" style="width:50%"></div>
+        </div>
+        <div class="soon-card reveal">
+          <div class="soon-img"><span>Coming Soon</span></div>
+          <span class="soon-cat">크로스핏 / 클라이밍</span>
+          <div class="soon-line" style="width:72%"></div>
+          <div class="soon-line" style="width:40%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section>
+    <div class="inner">
+      <div class="sec-tag reveal">How It Works</div>
+      <h2 class="sec-title reveal">출시 후 이용 방법</h2>
+      <div class="how-steps">
+        <div class="how-step reveal">
+          <div class="step-num">01</div>
+          <h3>멤버십 시작</h3>
+          <p>나의 운동 빈도에 맞는 플랜을 선택하면 매달 크레딧이 충전됩니다.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num">02</div>
+          <h3>검색하고 예약</h3>
+          <p>내 주변 시설을 검색하고 원하는 시간대를 골라 크레딧으로 예약합니다.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num">03</div>
+          <h3>방문하고 운동</h3>
+          <p>예약 시간에 방문해 체크인하면 끝. 쓰지 않은 크레딧은 다음 달로 이월됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-sec cta-booking">
+    <div class="cta-bg"></div>
+    <div class="cta-inner">
+      <h2>지금 예약하면,<br>시작이 공짜입니다</h2>
+      <p>사전 예약 후 가입 시 무료 크레딧 증정 — 출시 소식도 가장 먼저 받아보세요.</p>
+      <a class="btn btn-white" href="#register">사전 예약 신청하기</a>
+    </div>
+  </div>
+
+</div><!-- /view-booking -->
+
+<!-- ════════════════ VIEW : 파트너 신청 ════════════════ -->
+<div id="view-partner" class="view" hidden>
+
+  <!-- HERO -->
+  <header class="hero hero-partner">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="hero-eyebrow">For Partners</div>
+        <div class="hero-badge">🤝 오픈 파트너 혜택 — 첫 <em>1개월 수수료 5% 할인</em></div>
+      </div>
+      <h1>비어 있는 시간대가<br><span class="blue">새로운 수익</span>이 됩니다</h1>
+      <p>초기 비용 없음, 고정 수수료 없음. 시설이 직접 설정한 빈 시간대에만 운동에 진심인 고객이 찾아옵니다. 기존 회원과 운영 방식은 그대로 유지하세요.</p>
+      <a class="btn btn-primary" href="#apply">파트너 입점 신청하기</a>
+    </div>
+  </header>
+
+  <!-- TRUST STRIP -->
+  <div class="trust">
+    <div class="trust-grid">
+      <div class="trust-item"><div class="t-num">0원</div><div class="t-label">입점 비용 · 고정비 없음</div></div>
+      <div class="trust-item"><div class="t-num">100%</div><div class="t-label">시간대·인원 운영 자율권</div></div>
+      <div class="trust-item"><div class="t-num">+α</div><div class="t-label">기존 회원 외 신규 고객 유입</div></div>
+      <div class="trust-item"><div class="t-num">-5%</div><div class="t-label">첫 1개월 수수료 할인</div></div>
+    </div>
+  </div>
+
+  <!-- VALUE -->
+  <section>
+    <div class="inner">
+      <div class="sec-tag reveal">Partner Value</div>
+      <h2 class="sec-title reveal">입점하면 달라지는 것들</h2>
+      <p class="sec-sub reveal">광고비를 쓰지 않아도, 운영을 바꾸지 않아도 됩니다. ullo가 빈자리를 채워드립니다.</p>
+      <div class="val-grid">
+        <div class="val-card reveal">
+          <div class="val-num">01 — NEW MEMBERS</div>
+          <h3>운동에 진심인<br>신규 고객 유입</h3>
+          <p>ullo 이용자는 이미 월결제로 크레딧을 보유한, 방문 의지가 확실한 고객입니다. 체험만 하고 사라지는 고객이 아니라 정식 회원으로 전환될 가능성이 높은 고객을 만나세요.</p>
+        </div>
+        <div class="val-card reveal">
+          <div class="val-num">02 — EMPTY SLOTS</div>
+          <h3>빈 시간대만<br>골라서 채우는 수익</h3>
+          <p>오전 한가한 시간, 평일 낮 시간 — 어차피 비어 있던 자리가 정산 수익으로 바뀝니다. 받고 싶은 요일·시간·인원을 직접 설정하고 언제든 조정할 수 있습니다.</p>
+        </div>
+        <div class="val-card reveal">
+          <div class="val-num">03 — PAYOUT</div>
+          <h3>장부 없이<br>월 1회 자동 정산</h3>
+          <p>크레딧 사용 내역이 자동으로 집계되고, 정산 금액은 매월 1회 등록 계좌로 입금됩니다. 방문 내역과 수익은 파트너 대시보드에서 실시간으로 확인하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-sec" id="apply">
+    <div class="inner">
+      <div class="form-wrap">
+        <div class="form-side">
+          <div class="sec-tag reveal">Apply Now</div>
+          <h2 class="sec-title reveal">파트너 입점 신청</h2>
+          <p class="sec-sub reveal">아래 정보를 남겨주시면 담당자가 영업일 기준 1–2일 내에 연락드립니다. 서비스 오픈 전 신청 시 오픈 파트너로 우선 등록됩니다.</p>
+          <ul class="checklist reveal">
+            <li>입점 비용과 고정 수수료가 없습니다</li>
+            <li>가용 시간대·인원은 파트너가 직접 설정합니다</li>
+            <li>기존 회원 운영 방식은 그대로 유지됩니다</li>
+            <li>정산 금액은 매월 1회 등록 계좌로 입금됩니다</li>
+            <li>방문 내역과 수익은 대시보드에서 실시간 확인 가능합니다</li>
+            <li>원하면 언제든지 운영을 중단할 수 있습니다</li>
+          </ul>
+          <div class="benefit-note reveal">
+            <div class="bn-tag en">Launch Benefit</div>
+            <h3>지금 신청하면<br>첫 1개월 수수료 5% 할인</h3>
+            <p>입점 후 첫 정산 월 기준으로 적용됩니다. 부담 없이 시작하고 효과를 직접 확인해보세요.</p>
+          </div>
+        </div>
+        <div class="form-card reveal">
+          <form id="partner-form">
+            <h3>입점 신청서</h3>
+            <p class="form-desc"><em>*</em> 표시는 필수 입력 항목입니다</p>
+            <div class="f-row">
+              <div class="f-group">
+                <label>시설명 <em>*</em></label>
+                <input type="text" name="facility" placeholder="예) ullo 피트니스 강남점" required>
+              </div>
+              <div class="f-group">
+                <label>운동 종류 <em>*</em></label>
+                <select name="category" required>
+                  <option value="">선택해주세요</option>
+                  <option>헬스 / 피트니스</option>
+                  <option>크로스핏</option>
+                  <option>필라테스</option>
+                  <option>요가</option>
+                  <option>클라이밍</option>
+                  <option>복싱 / 격투기</option>
+                  <option>수영</option>
+                  <option>골프</option>
+                  <option>기타</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>지역 <em>*</em></label>
+                <input type="text" name="region" placeholder="예) 서울 강남구" required>
+              </div>
+              <div class="f-group">
+                <label>담당자 성함 <em>*</em></label>
+                <input type="text" name="manager" placeholder="예) 홍길동" required>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>연락처 <em>*</em></label>
+                <input type="tel" name="phone" placeholder="010-0000-0000" required>
+              </div>
+              <div class="f-group">
+                <label>이메일</label>
+                <input type="email" name="email" placeholder="partner@example.com">
+              </div>
+            </div>
+            <div class="f-group f-grow">
+              <label>문의사항</label>
+              <textarea name="message" placeholder="시설 규모, 희망 운영 시간대 등 자유롭게 적어주세요"></textarea>
+            </div>
+            <label class="f-agree">
+              <input type="checkbox" required>
+              <span>개인정보 수집 및 이용에 동의합니다. 수집된 정보는 파트너 상담 목적으로만 사용됩니다. <em style="color:var(--primary);font-style:normal">*</em></span>
+            </label>
+            <button type="submit" class="btn btn-primary f-submit">입점 신청 완료하기</button>
+          </form>
+          <div class="form-success" id="partner-success">
+            <div class="fs-icon">✓</div>
+            <h3>신청이 완료되었습니다!</h3>
+            <p>담당자가 영업일 기준 1–2일 내에<br>남겨주신 연락처로 안내드리겠습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section>
+    <div class="inner">
+      <div class="sec-tag reveal">Process</div>
+      <h2 class="sec-title reveal">신청 후 이렇게 진행됩니다</h2>
+      <div class="how-steps">
+        <div class="how-step reveal">
+          <div class="step-num">01</div>
+          <h3>상담 및 조건 확인</h3>
+          <p>담당자가 연락드려 시설 정보와 운영 조건을 확인합니다. 궁금한 점을 모두 물어보세요.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num">02</div>
+          <h3>앱 등록 및 오픈</h3>
+          <p>시설 정보가 ullo 앱에 등록됩니다. 가용 시간대와 최대 인원은 파트너가 직접 설정해요.</p>
+        </div>
+        <div class="how-step reveal">
+          <div class="step-num">03</div>
+          <h3>방문 수신 및 정산</h3>
+          <p>고객이 크레딧으로 방문하면 자동 적립되며, 첫 1개월은 수수료 5% 할인이 적용됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-sec">
+    <div class="inner">
+      <div class="sec-tag reveal">FAQ</div>
+      <h2 class="sec-title reveal">자주 묻는 질문</h2>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">서비스가 아직 오픈 전인데, 지금 신청하면 어떻게 되나요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>현재 ullo는 앱 출시와 파트너 입점을 함께 준비하고 있습니다. 지금 신청하시면 오픈 파트너로 우선 등록되어 서비스 시작과 동시에 노출되며, 첫 1개월 수수료 5% 할인 혜택이 적용됩니다.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">입점 비용이나 월 고정비가 있나요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>없습니다. 입점 비용, 월 고정비, 광고비 모두 0원입니다. 이용자가 크레딧으로 실제 방문했을 때만 정산 수수료가 발생하는 구조라, 방문이 없으면 비용도 없습니다.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">기존 회원이 ullo로 빠져나가지 않을까요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>ullo는 파트너가 직접 설정한 빈 시간대와 인원에만 이용자를 연결합니다. 기존 회원의 자리를 침범하지 않으며, 오히려 ullo로 방문한 고객이 시설이 마음에 들어 정식 회원으로 전환되는 효과를 기대할 수 있습니다.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">정산은 언제, 어떻게 받나요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>크레딧 사용 내역은 자동으로 적립·집계되며, 파트너 대시보드에서 실시간으로 확인할 수 있습니다. 정산 금액은 매월 1회 등록 계좌로 입금됩니다.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">운영 시간대는 나중에 바꿀 수 있나요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>네, 언제든지 가능합니다. 받고 싶은 요일, 시간대, 최대 인원을 파트너가 직접 설정하고 자유롭게 조정할 수 있습니다. 성수기에는 줄이고 비수기에는 늘리는 식의 탄력 운영도 가능합니다.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">수수료 5% 할인은 어떻게 적용되나요?</span><span class="q-toggle">+</span></button>
+          <div class="faq-a"><p>ullo를 통해 첫 예약을 받기 시작한 달(첫 정산 월) 기준으로 1개월간 정산 수수료가 5% 할인됩니다. 별도 신청 없이 자동 적용됩니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-partner -->
+
+<!-- ===== FOOTER (공통) : 사업자 정보 ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a class="footer-logo" href="#service" aria-label="ullo 홈"><svg viewBox="0 0 230.5 120"><use href="#ullo-logo"/></svg></a>
+      <div class="footer-links">
+        <a href="#service">서비스 소개</a>
+        <a href="#booking">사전 예약</a>
+        <a href="#partner">파트너 신청</a>
+      </div>
+    </div>
+    <div class="footer-biz">
+      <strong>티지에이컴퍼니 (TGA COMPANY)</strong><span class="sep">|</span>사업자등록번호 : 131-37-62382<br>
+      주소 : 서울특별시 은평구 응암로9길 11-1<span class="sep">|</span>이메일 : tgacompany@naver.com
+    </div>
+    <p class="footer-copy">© 2026 TGA COMPANY. All rights reserved. · sayullo.com</p>
+  </div>
+</footer>
+
+<script>
+/* ===== 해시 라우터 : 한 파일 안에서 화면 전환 ===== */
+const views = {
+  home: document.getElementById('view-home'),
+  booking: document.getElementById('view-booking'),
+  partner: document.getElementById('view-partner')
+};
+/* 해시 → [보여줄 화면, 스크롤 대상 id] */
+const routes = {
+  '': ['home', null],
+  'home': ['home', null],
+  'service': ['home', 'service'],
+  'prereg': ['home', 'prereg'],
+  'partner-intro': ['home', 'partner-intro'],
+  'booking': ['booking', null],
+  'register': ['booking', 'register'],
+  'partner': ['partner', null],
+  'apply': ['partner', 'apply']
+};
+
+function route() {
+  const hash = location.hash.replace('#', '');
+  const [viewName, target] = routes[hash] || ['home', null];
+  const switching = views[viewName].hidden;
+  Object.entries(views).forEach(([name, el]) => { el.hidden = name !== viewName; });
+
+  if (target) {
+    const el = document.getElementById(target);
+    if (el) {
+      if (switching) {
+        /* 화면이 바뀐 경우: 애니메이션 없이 바로 위치 */
+        document.documentElement.style.scrollBehavior = 'auto';
+        requestAnimationFrame(() => {
+          el.scrollIntoView();
+          document.documentElement.style.scrollBehavior = '';
+        });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  } else {
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = '';
+  }
+}
+window.addEventListener('hashchange', route);
+route();
+
+/* ===== 수익 시뮬레이터 ===== */
+const CREDIT_PRICE = 3000;
+const visits = document.getElementById('visits');
+const credits = document.getElementById('credits');
+const fee = document.getElementById('fee');
+const visitsVal = document.getElementById('visits-val');
+const creditsVal = document.getElementById('credits-val');
+const feeVal = document.getElementById('fee-val');
+const result = document.getElementById('result');
+const resultSub = document.getElementById('result-sub');
+
+function calc() {
+  const v = parseInt(visits.value);
+  const c = parseInt(credits.value);
+  const f = parseInt(fee.value);
+  const total = Math.round(v * c * CREDIT_PRICE * (1 - f / 100));
+  visitsVal.textContent = v + '회';
+  creditsVal.textContent = c + '개';
+  feeVal.textContent = f + '%';
+  result.textContent = total.toLocaleString('ko-KR') + '원';
+  resultSub.textContent = v + '회 × ' + c + '크레딧 × 3,000원 × (1 - ' + f + '%)';
+}
+visits.addEventListener('input', calc);
+credits.addEventListener('input', calc);
+fee.addEventListener('input', calc);
+calc();
+
+/* ===== 신청 폼 (사전 예약 / 파트너) ===== */
+function bindForm(formId, successId) {
+  document.getElementById(formId).addEventListener('submit', function (e) {
+    e.preventDefault();
+    const card = this.closest('.form-card');
+    card.style.minHeight = card.offsetHeight + 'px';
+    this.style.display = 'none';
+    const ok = document.getElementById(successId);
+    ok.style.display = 'flex';
+    ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+bindForm('prereg-form', 'prereg-success');
+bindForm('partner-form', 'partner-success');
+
+/* ===== FAQ 아코디언 ===== */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const ans = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o => {
+      o.classList.remove('open');
+      o.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ===== 스크롤 리빌 ===== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
