@@ -250,18 +250,39 @@ section{padding:100px 40px;scroll-margin-top:62px}
 .form-success p{font-size:15px;color:var(--text-secondary);line-height:1.8}
 .form-success p em{font-style:normal;color:var(--primary);font-weight:800}
 
-/* ===== 사전 예약 — COMING SOON ===== */
-.soon-sec{background:var(--bg-section);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
-.soon-banner{display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.14);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:18px 24px;margin-top:44px}
-.soon-banner .sb-dot{width:10px;height:10px;border-radius:50%;background:var(--warning);flex:none;animation:pulse 1.6s ease-in-out infinite}
+/* ===== 사전 예약 — 시설 찾기 (지도) ===== */
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.soon-banner p{font-size:14.5px;font-weight:700;color:var(--warning-text);line-height:1.6}
-.soon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
-.soon-card{background:#fff;border:1px dashed var(--border-strong);border-radius:16px;padding:28px;display:flex;flex-direction:column}
-.soon-img{height:150px;border-radius:10px;background:var(--skeleton);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-.soon-img span{font-size:14px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-disabled)}
-.soon-line{height:12px;border-radius:4px;background:var(--skeleton);margin-bottom:10px}
-.soon-cat{display:inline-flex;align-self:flex-start;font-size:12px;font-weight:800;background:var(--primary-bg);color:var(--primary);padding:5px 12px;border-radius:6px;margin-bottom:16px}
+.mf-sec{background:var(--bg-section);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.mf-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px}
+.mf-tab{border:1px solid var(--border-default);background:#fff;border-radius:100px;padding:9px 18px;font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:background .15s,border-color .15s,color .15s}
+.mf-tab:hover{border-color:var(--primary);color:var(--primary)}
+.mf-tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.mf-search{display:flex;gap:10px;margin-top:14px}
+.mf-search-box{position:relative;flex:1}
+.mf-search-box input{width:100%;border:1px solid var(--border-default);border-radius:10px;padding:14px 16px;font-size:16px;font-family:inherit;color:var(--text-primary);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+.mf-search-box input:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(0,100,255,.3)}
+.mf-loc-btn{flex:none;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border-default);background:#fff;border-radius:10px;padding:0 18px;font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s;white-space:nowrap}
+.mf-loc-btn:hover{border-color:var(--primary);color:var(--primary)}
+.mf-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-top:16px}
+.mf-map-wrap{position:relative;height:500px;border-radius:16px;overflow:hidden;border:1px solid var(--border-default);background:#EEF1F5}
+#mf-map{width:100%;height:100%}
+.mf-map-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;background:repeating-linear-gradient(45deg,#EEF1F5,#EEF1F5 12px,#E7EBF0 12px,#E7EBF0 24px)}
+.mf-map-fallback strong{color:var(--text-primary);font-size:16px;font-weight:800}
+.mf-map-fallback span{font-size:13px;line-height:1.7;max-width:360px;color:var(--text-secondary)}
+.mf-panel{height:500px;border-radius:16px;border:1px solid var(--border-default);background:#fff;padding:24px;overflow-y:auto}
+.mf-panel-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:var(--text-disabled)}
+.mf-panel-empty .ic{font-size:30px}
+.mf-panel-empty p{font-size:13.5px;line-height:1.6}
+.mf-card-cat{display:inline-flex;font-size:12px;font-weight:800;background:var(--primary-bg);color:var(--primary);padding:5px 12px;border-radius:6px;margin-bottom:14px}
+.mf-card h3{font-size:20px;font-weight:800;margin-bottom:14px;line-height:1.3}
+.mf-card .row{display:flex;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.6;padding:10px 0;border-top:1px solid var(--border-default)}
+.mf-card .row .k{flex:none;color:var(--text-disabled);width:62px;font-weight:600}
+.mf-card .note{margin-top:18px;background:var(--primary-bg);border-radius:10px;padding:14px 16px;font-size:13px;font-weight:600;color:var(--primary);line-height:1.6}
+.mf-cta{margin-top:32px;background:var(--text-primary);color:#fff;border-radius:16px;padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.mf-cta p{font-size:clamp(17px,2.2vw,22px);font-weight:800;line-height:1.4}
+.mf-pin{width:34px;height:34px;border-radius:50% 50% 50% 0;background:var(--primary);transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3);border:2px solid #fff;cursor:pointer}
+.mf-pin span{transform:rotate(45deg);font-size:15px;line-height:1}
+.mf-pin.me{background:#1A1A1A}
 
 /* ===== HOW / PROCESS 공통 ===== */
 .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
@@ -331,7 +352,9 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
   .uv-compare,.prereg-card{grid-template-columns:1fr}
   .prereg-right{min-height:260px;order:-1}
   .sim-wrap,.reg-wrap,.form-wrap{grid-template-columns:1fr;gap:40px}
-  .soon-grid{grid-template-columns:1fr 1fr}
+  .mf-layout{grid-template-columns:1fr}
+  .mf-map-wrap{height:380px}
+  .mf-panel{height:auto;min-height:200px}
   .trust-grid{grid-template-columns:1fr 1fr}
   .trust-item{border-bottom:1px solid #D5E4FF}
   .trust-item:nth-child(even){border-right:none}
@@ -353,7 +376,7 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
   .uv-slogan{padding:32px 26px}
   .form-card{padding:30px 22px}
   .f-row{grid-template-columns:1fr}
-  .soon-grid{grid-template-columns:1fr}
+  .mf-cta{padding:26px 24px}
   .trust-item{padding:26px 20px}
   .trust-item .t-num{font-size:22px}
   footer{padding:44px 24px 32px}
@@ -672,35 +695,53 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
     </div>
   </section>
 
-  <!-- COMING SOON 시설 -->
-  <section class="soon-sec">
+  <!-- 시설 찾기 (지도) -->
+  <section class="mf-sec">
     <div class="inner">
-      <div class="sec-tag reveal">Partner Facilities</div>
-      <h2 class="sec-title reveal">함께할 시설들을 준비하고 있어요</h2>
-      <p class="sec-sub reveal">헬스, 크로스핏, 필라테스, 요가, 클라이밍, 수영 등 다양한 운동 시설이 ullo와 함께할 준비를 하고 있습니다.</p>
-      <div class="soon-banner reveal">
-        <span class="sb-dot"></span>
-        <p>현재 파트너 시설 입점 협의가 진행 중입니다. 이용 가능한 시설은 확정되는 대로 이 페이지와 앱에서 공개됩니다.</p>
+      <div class="sec-tag reveal">Find Facilities</div>
+      <h2 class="sec-title reveal">원하는 운동, 지금 찾아보세요</h2>
+      <p class="sec-sub reveal">헬스장부터 필라테스, 요가, 수영까지 ullo 하나로 내 주변 시설을 검색해요.</p>
+
+      <!-- ① 종목 필터 탭 -->
+      <div class="mf-tabs reveal" id="mf-tabs">
+        <button type="button" class="mf-tab active" data-cat="전체">전체</button>
+        <button type="button" class="mf-tab" data-cat="헬스장">헬스장</button>
+        <button type="button" class="mf-tab" data-cat="필라테스">필라테스</button>
+        <button type="button" class="mf-tab" data-cat="요가">요가</button>
+        <button type="button" class="mf-tab" data-cat="수영">수영</button>
+        <button type="button" class="mf-tab" data-cat="크로스핏">크로스핏</button>
+        <button type="button" class="mf-tab" data-cat="라켓">라켓</button>
       </div>
-      <div class="soon-grid">
-        <div class="soon-card reveal">
-          <div class="soon-img"><span>Coming Soon</span></div>
-          <span class="soon-cat">헬스 / 피트니스</span>
-          <div class="soon-line" style="width:70%"></div>
-          <div class="soon-line" style="width:45%"></div>
+
+      <!-- ② 검색창 + 현재 위치 -->
+      <div class="mf-search reveal">
+        <div class="mf-search-box">
+          <input type="text" id="mf-search-input" placeholder="지역 또는 시설명 검색" autocomplete="off">
         </div>
-        <div class="soon-card reveal">
-          <div class="soon-img"><span>Coming Soon</span></div>
-          <span class="soon-cat">필라테스 / 요가</span>
-          <div class="soon-line" style="width:65%"></div>
-          <div class="soon-line" style="width:50%"></div>
+        <button class="mf-loc-btn" id="mf-loc-btn" type="button">📍 현재 위치</button>
+      </div>
+
+      <!-- ③ 지도 + ④ 시설 카드 -->
+      <div class="mf-layout reveal">
+        <div class="mf-map-wrap">
+          <div id="mf-map"></div>
+          <div class="mf-map-fallback" id="mf-map-fallback">
+            <strong>지도 준비 중</strong>
+            <span>네이버 지도 API Client ID가 설정되면 이곳에 시설 지도가 표시됩니다.<br>(코드 상단 <code>NAVER_MAP_CLIENT_ID</code> 값을 발급받은 키로 교체하세요.)</span>
+          </div>
         </div>
-        <div class="soon-card reveal">
-          <div class="soon-img"><span>Coming Soon</span></div>
-          <span class="soon-cat">크로스핏 / 클라이밍</span>
-          <div class="soon-line" style="width:72%"></div>
-          <div class="soon-line" style="width:40%"></div>
+        <div class="mf-panel" id="mf-panel">
+          <div class="mf-panel-empty" id="mf-panel-empty">
+            <div class="ic">🗺️</div>
+            <p>지도의 핀을 선택하면<br>시설 정보가 여기에 표시돼요.</p>
+          </div>
         </div>
+      </div>
+
+      <!-- ⑤ 하단 CTA -->
+      <div class="mf-cta reveal">
+        <p>마음에 드는 시설이 있나요?<br>사전예약하고 오픈 첫날 바로 써요.</p>
+        <a class="btn btn-primary" href="#register">사전예약 하기</a>
       </div>
     </div>
   </section>
@@ -1151,6 +1192,160 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     chip.classList.toggle('active');
     hidden.value = [...wrap.querySelectorAll('.chip.active')].map(c => c.textContent.trim()).join(', ');
   });
+})();
+
+/* ===== 시설 찾기 지도 (네이버 지도) ===== */
+(function () {
+  /* ▼▼▼ 네이버 지도 API Client ID — 발급 후 아래 'YOUR_NAVER_CLIENT_ID'만 교체하면 바로 작동합니다 ▼▼▼
+     발급: https://www.ncloud.com → Maps(Web Dynamic Map) 신청 → Application의 Client ID 복사
+     (구 developers.naver.com 키라면 SCRIPT_BASE를 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' 로 두세요) */
+  const NAVER_MAP_CLIENT_ID = 'YOUR_NAVER_CLIENT_ID';
+  const SCRIPT_BASE = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=';
+
+  /* 샘플 시설 데이터 — 실제 서비스에서는 백엔드(네이버 지역 검색 프록시 등)로 교체
+     cat: 탭 종목 / icon: 핀에 표시할 아이콘(색상은 단일 프라이머리) */
+  const FACILITIES = [
+    { name: '아이언짐 강남', cat: '헬스장', icon: '🏋️', addr: '서울 강남구 테헤란로 124', hours: '평일 06:00–24:00 · 주말 08:00–22:00', lat: 37.4998, lng: 127.0297 },
+    { name: '코어 필라테스 역삼', cat: '필라테스', icon: '🤸', addr: '서울 강남구 역삼로 180', hours: '평일 07:00–22:00 · 토 09:00–18:00', lat: 37.5005, lng: 127.0360 },
+    { name: '플로우 요가 스튜디오', cat: '요가', icon: '🧘', addr: '서울 성동구 왕십리로 115', hours: '매일 08:00–22:00', lat: 37.5445, lng: 127.0558 },
+    { name: '블루레인 수영장', cat: '수영', icon: '🏊', addr: '서울 송파구 올림픽로 300', hours: '평일 06:00–21:00 · 주말 08:00–18:00', lat: 37.5139, lng: 127.1058 },
+    { name: '크로스핏 한강', cat: '크로스핏', icon: '💪', addr: '서울 마포구 양화로 45', hours: '평일 06:00–23:00 · 토 09:00–17:00', lat: 37.5503, lng: 126.9143 },
+    { name: '에이스 테니스 클럽', cat: '라켓', icon: '🎾', addr: '서울 강남구 논현로 430', hours: '매일 06:00–24:00', lat: 37.5042, lng: 127.0220 },
+    { name: '파워핏 합정', cat: '헬스장', icon: '🏋️', addr: '서울 마포구 독막로 130', hours: '24시간 운영', lat: 37.5492, lng: 126.9135 },
+    { name: '밸런스 필라테스 잠실', cat: '필라테스', icon: '🤸', addr: '서울 송파구 백제고분로 35', hours: '평일 07:00–22:00', lat: 37.5078, lng: 127.0858 },
+    { name: '선셋 요가 연남', cat: '요가', icon: '🧘', addr: '서울 마포구 성미산로 160', hours: '매일 09:00–21:00', lat: 37.5640, lng: 126.9255 },
+    { name: '스매시 배드민턴 성수', cat: '라켓', icon: '🎾', addr: '서울 성동구 성수일로 77', hours: '매일 06:00–23:00', lat: 37.5443, lng: 127.0560 }
+  ];
+
+  const tabs = document.getElementById('mf-tabs');
+  const panel = document.getElementById('mf-panel');
+  const searchInput = document.getElementById('mf-search-input');
+  const locBtn = document.getElementById('mf-loc-btn');
+  const fallback = document.getElementById('mf-map-fallback');
+  if (!tabs) return;
+
+  let map = null, markers = [], meMarker = null, userPos = null, activeCat = '전체';
+
+  /* 두 좌표 간 거리(m) — Haversine */
+  function distMeters(a, b) {
+    const R = 6371000, toRad = d => d * Math.PI / 180;
+    const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
+    const s = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(s));
+  }
+  function walkText(f) {
+    if (!userPos) return '현재 위치 허용 시 표시';
+    const m = distMeters(userPos, f);
+    const min = Math.max(1, Math.round(m / 67)); /* 도보 약 67m/분 */
+    const d = m >= 1000 ? (m / 1000).toFixed(1) + 'km' : Math.round(m) + 'm';
+    return `도보 약 ${min}분 (${d})`;
+  }
+
+  function showCard(f) {
+    panel.innerHTML =
+      '<span class="mf-card-cat">' + f.icon + ' ' + f.cat + '</span>' +
+      '<h3>' + f.name + '</h3>' +
+      '<div class="row"><span class="k">주소</span><span>' + f.addr + '</span></div>' +
+      '<div class="row"><span class="k">도보거리</span><span>' + walkText(f) + '</span></div>' +
+      '<div class="row"><span class="k">운영시간</span><span>' + f.hours + '</span></div>' +
+      '<div class="note">🎁 ullo 출시 후 이 시설을 크레딧으로 이용할 수 있어요</div>';
+  }
+  function resetPanel() {
+    panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">🗺️</div><p>지도의 핀을 선택하면<br>시설 정보가 여기에 표시돼요.</p></div>';
+  }
+
+  function clearMarkers() { markers.forEach(m => m.setMap(null)); markers = []; }
+  function renderMarkers() {
+    if (!map) return;
+    clearMarkers();
+    FACILITIES.filter(f => activeCat === '전체' || f.cat === activeCat).forEach(f => {
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(f.lat, f.lng),
+        map: map,
+        icon: { content: '<div class="mf-pin"><span>' + f.icon + '</span></div>', anchor: new naver.maps.Point(17, 34) }
+      });
+      naver.maps.Event.addListener(marker, 'click', () => showCard(f));
+      markers.push(marker);
+    });
+  }
+
+  /* 탭: 종목 필터 */
+  tabs.addEventListener('click', e => {
+    const tab = e.target.closest('.mf-tab');
+    if (!tab) return;
+    tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeCat = tab.dataset.cat;
+    renderMarkers();
+    resetPanel();
+  });
+
+  /* 검색: 시설명 우선, 없으면 지오코딩으로 지도 이동 */
+  function doSearch() {
+    const q = searchInput.value.trim();
+    if (!q || !map) return;
+    const hit = FACILITIES.find(f => f.name.includes(q));
+    if (hit) {
+      map.setCenter(new naver.maps.LatLng(hit.lat, hit.lng));
+      map.setZoom(15);
+      showCard(hit);
+      return;
+    }
+    if (naver.maps.Service && naver.maps.Service.geocode) {
+      naver.maps.Service.geocode({ query: q }, (status, res) => {
+        if (status === naver.maps.Service.Status.OK && res.v2.addresses.length) {
+          const a = res.v2.addresses[0];
+          map.setCenter(new naver.maps.LatLng(+a.y, +a.x));
+          map.setZoom(15);
+        } else {
+          alert('검색 결과가 없습니다. 다른 키워드로 시도해 주세요.');
+        }
+      });
+    }
+  }
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+
+  /* 현재 위치 */
+  locBtn.addEventListener('click', () => {
+    if (!navigator.geolocation) { alert('이 브라우저에서는 위치 기능을 사용할 수 없어요.'); return; }
+    locBtn.textContent = '위치 확인 중...';
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        locBtn.textContent = '📍 현재 위치';
+        if (map) {
+          map.setCenter(new naver.maps.LatLng(userPos.lat, userPos.lng));
+          map.setZoom(15);
+          if (meMarker) meMarker.setMap(null);
+          meMarker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(userPos.lat, userPos.lng), map: map,
+            icon: { content: '<div class="mf-pin me"><span>📍</span></div>', anchor: new naver.maps.Point(17, 34) }
+          });
+        }
+      },
+      () => { locBtn.textContent = '📍 현재 위치'; alert('위치를 가져오지 못했어요. 브라우저 위치 권한을 확인해 주세요.'); }
+    );
+  });
+
+  /* 네이버 지도 로드 */
+  window.__initUlloMap = function () {
+    fallback.style.display = 'none';
+    map = new naver.maps.Map('mf-map', {
+      center: new naver.maps.LatLng(37.5172, 127.0286),
+      zoom: 12
+    });
+    renderMarkers();
+  };
+  if (NAVER_MAP_CLIENT_ID && NAVER_MAP_CLIENT_ID !== 'YOUR_NAVER_CLIENT_ID') {
+    const s = document.createElement('script');
+    s.src = SCRIPT_BASE + NAVER_MAP_CLIENT_ID + '&submodules=geocoder&callback=__initUlloMap';
+    s.onerror = () => {
+      fallback.querySelector('strong').textContent = '지도를 불러오지 못했어요';
+      fallback.querySelector('span').innerHTML = 'API Client ID와 서비스 URL(웹) 등록을 확인해 주세요.';
+    };
+    document.head.appendChild(s);
+  }
+  /* 키 미설정 시: fallback 안내가 그대로 노출됩니다. */
 })();
 
 /* ===== FAQ 아코디언 ===== */
