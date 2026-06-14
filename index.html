@@ -1196,11 +1196,12 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
 
 /* ===== 시설 찾기 지도 (네이버 지도) ===== */
 (function () {
-  /* ▼▼▼ 네이버 지도 API Client ID — 발급 후 아래 'YOUR_NAVER_CLIENT_ID'만 교체하면 바로 작동합니다 ▼▼▼
-     발급: https://www.ncloud.com → Maps(Web Dynamic Map) 신청 → Application의 Client ID 복사
-     (구 developers.naver.com 키라면 SCRIPT_BASE를 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' 로 두세요) */
-  const NAVER_MAP_CLIENT_ID = 'YOUR_NAVER_CLIENT_ID';
-  const SCRIPT_BASE = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=';
+  /* ▼▼▼ 네이버 지도 API 키 — 아래 값만 교체하면 바로 작동합니다 ▼▼▼
+     발급: https://www.ncloud.com → Maps(Web Dynamic Map) 신청 → Application의 Client ID(=Key ID) 복사
+     - 네이버클라우드(NCP) 키:  SCRIPT_BASE = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='  (현재 설정)
+     - 구 developers.naver.com 키: SCRIPT_BASE = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' */
+  const NAVER_MAP_CLIENT_ID = 'jhyc08fg9y';
+  const SCRIPT_BASE = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=';
 
   /* 샘플 시설 데이터 — 실제 서비스에서는 백엔드(네이버 지역 검색 프록시 등)로 교체
      cat: 탭 종목 / icon: 핀에 표시할 아이콘(색상은 단일 프라이머리) */
@@ -1327,8 +1328,15 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     );
   });
 
+  function showFallback(title, msg) {
+    fallback.style.display = 'flex';
+    fallback.querySelector('strong').textContent = title;
+    fallback.querySelector('span').innerHTML = msg;
+  }
+
   /* 네이버 지도 로드 */
   window.__initUlloMap = function () {
+    if (!(window.naver && naver.maps && naver.maps.Map)) return;
     fallback.style.display = 'none';
     map = new naver.maps.Map('mf-map', {
       center: new naver.maps.LatLng(37.5172, 127.0286),
@@ -1336,13 +1344,14 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     });
     renderMarkers();
   };
+  /* 네이버 인증 실패(Client ID에 접속 URL 미등록 등) 시 호출되는 전역 훅 */
+  window.navermap_authFailure = function () {
+    showFallback('지도 인증에 실패했어요', '네이버 클라우드 콘솔에서 이 Client ID에 현재 접속 주소(웹 서비스 URL)를 등록해 주세요.<br>예) <code>http://localhost:8723</code>, 실제 도메인(<code>sayullo.com</code>)');
+  };
   if (NAVER_MAP_CLIENT_ID && NAVER_MAP_CLIENT_ID !== 'YOUR_NAVER_CLIENT_ID') {
     const s = document.createElement('script');
     s.src = SCRIPT_BASE + NAVER_MAP_CLIENT_ID + '&submodules=geocoder&callback=__initUlloMap';
-    s.onerror = () => {
-      fallback.querySelector('strong').textContent = '지도를 불러오지 못했어요';
-      fallback.querySelector('span').innerHTML = 'API Client ID와 서비스 URL(웹) 등록을 확인해 주세요.';
-    };
+    s.onerror = () => showFallback('지도를 불러오지 못했어요', 'API Client ID와 서비스 URL(웹) 등록을 확인해 주세요.');
     document.head.appendChild(s);
   }
   /* 키 미설정 시: fallback 안내가 그대로 노출됩니다. */
