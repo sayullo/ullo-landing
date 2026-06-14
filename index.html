@@ -1262,14 +1262,11 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
 
   /* ── 좌표/데이터 변환 ── */
   function toLatLng(item) {
-    const x = Number(item.mapx), y = Number(item.mapy);
+    let x = Number(item.mapx), y = Number(item.mapy);   // 네이버 좌표(경도=mapx, 위도=mapy)
     if (!x || !y) return null;
-    if (x > 1e8 || y > 1e8) return { lat: y / 1e7, lng: x / 1e7 };           // 현 지역검색: 경도·위도 × 1e7
-    if (window.naver && naver.maps && naver.maps.TransCoord) {               // 구 KATEC(TM128) 대응
-      const p = naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(x, y));
-      return { lat: p.lat(), lng: p.lng() };
-    }
-    return null;
+    if (Math.abs(x) > 1000) x = x / 1e7;                // 정수 좌표 → 도 단위
+    if (Math.abs(y) > 1000) y = y / 1e7;
+    return { lat: y, lng: x };
   }
   const stripTags = s => (s || '').replace(/<[^>]*>/g, '');
   function normalize(item, cat) {
@@ -1285,12 +1282,22 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     };
   }
 
-  /* ── Edge Function 프록시 호출 ── */
+  /* ── Edge Function 프록시 호출 (네이버 지역검색) ── */
+  const EDGE_URL = 'https://cigqhqcnvnzdengoejsl.supabase.co/functions/v1/naver-local';
   async function naverLocal(keyword, display) {
-    const { data, error } = await sb.functions.invoke('naver-local', { body: { keyword: keyword, display: display || 5 } });
-    if (error) throw error;
+    const res = await fetch(EDGE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify({ keyword: keyword, display: display || 20 })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
     if (data && data.error) throw new Error(data.error);
-    return (data && data.items) || [];
+    return Array.isArray(data) ? data : (data.items || data.results || data.places || []);
   }
 
   /* ── 핀 렌더 ── */
@@ -1323,7 +1330,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     try {
       const targets = (cat === '전체') ? CATS : CATS.filter(c => c.cat === cat);
       const lists = await Promise.all(targets.map(async c => {
-        const items = await naverLocal(c.keyword, 5);
+        const items = await naverLocal(c.keyword, 20);
         return items.map(it => normalize(it, c.cat)).filter(Boolean);
       }));
       let merged = [].concat(...lists);
@@ -1344,7 +1351,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     const token = ++reqToken;
     setLoading();
     try {
-      const items = (await naverLocal(q, 5)).map(it => normalize(it, null)).filter(Boolean);
+      const items = (await naverLocal(q, 20)).map(it => normalize(it, null)).filter(Boolean);
       if (token !== reqToken) return;
       const n = renderFacilities(items);
       n === 0 ? setError('검색 결과가 없어요. 다른 키워드로 시도해 주세요.') : resetPanel(n);
@@ -1404,7 +1411,10 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
       center: new naver.maps.LatLng(37.5172, 127.0286),
       zoom: 12
     });
-    loadCategory('전체');
+    /* 기본값: 헬스장 검색 */
+    activeCat = '헬스장';
+    tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === '헬스장'));
+    loadCategory('헬스장');
   };
   /* 네이버 인증 실패(Client ID에 접속 URL 미등록 등) 시 호출되는 전역 훅 */
   window.navermap_authFailure = function () {
