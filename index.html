@@ -1260,31 +1260,24 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">⚠️</div><p>' + msg + '</p></div>';
   }
 
-  /* ── 좌표/데이터 변환 ── */
-  function toLatLng(item) {
-    let x = Number(item.mapx), y = Number(item.mapy);   // 네이버 좌표(경도=mapx, 위도=mapy)
-    if (!x || !y) return null;
-    if (Math.abs(x) > 1000) x = x / 1e7;                // 정수 좌표 → 도 단위
-    if (Math.abs(y) > 1000) y = y / 1e7;
-    return { lat: y, lng: x };
-  }
+  /* ── 데이터 변환 (카카오: WGS84 위경도 그대로 사용) ── */
   const stripTags = s => (s || '').replace(/<[^>]*>/g, '');
   function normalize(item, cat) {
-    const ll = toLatLng(item);
-    if (!ll) return null;
+    const lat = Number(item.lat), lng = Number(item.lng);
+    if (!lat || !lng) return null;
     return {
       name: stripTags(item.title),
       cat: cat || ((item.category || '').split('>').pop() || '시설').trim(),
-      addr: item.roadAddress || item.address || '',
-      tel: item.telephone || '',
+      addr: item.address || '',
+      tel: item.phone || '',
       icon: ICON_OF(cat),
-      lat: ll.lat, lng: ll.lng
+      lat: lat, lng: lng
     };
   }
 
-  /* ── Edge Function 프록시 호출 (네이버 지역검색) ── */
+  /* ── Edge Function 프록시 호출 (카카오 로컬 키워드 검색) ── */
   const EDGE_URL = 'https://cigqhqcnvnzdengoejsl.supabase.co/functions/v1/naver-local';
-  async function naverLocal(keyword, display) {
+  async function searchPlaces(keyword, size) {
     const res = await fetch(EDGE_URL, {
       method: 'POST',
       headers: {
@@ -1292,12 +1285,12 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
         'apikey': SUPABASE_ANON_KEY
       },
-      body: JSON.stringify({ keyword: keyword, display: display || 20 })
+      body: JSON.stringify({ keyword: keyword, size: size || 45 })
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (data && data.error) throw new Error(data.error);
-    return Array.isArray(data) ? data : (data.items || data.results || data.places || []);
+    return Array.isArray(data) ? data : (data.items || data.documents || []);
   }
 
   /* ── 핀 렌더 ── */
@@ -1321,6 +1314,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
   }
 
   let reqToken = 0;
+  const REGION = '강남';   /* 카테고리 탭 검색 시 앞에 붙는 지역 (예: "강남 헬스장") */
 
   /* 탭: 전체=모든 종목 병합, 개별=해당 종목 키워드 검색 */
   async function loadCategory(cat) {
@@ -1330,7 +1324,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     try {
       const targets = (cat === '전체') ? CATS : CATS.filter(c => c.cat === cat);
       const lists = await Promise.all(targets.map(async c => {
-        const items = await naverLocal(c.keyword, 20);
+        const items = await searchPlaces(REGION + ' ' + c.keyword, 45);
         return items.map(it => normalize(it, c.cat)).filter(Boolean);
       }));
       let merged = [].concat(...lists);
@@ -1351,7 +1345,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     const token = ++reqToken;
     setLoading();
     try {
-      const items = (await naverLocal(q, 20)).map(it => normalize(it, null)).filter(Boolean);
+      const items = (await searchPlaces(q, 45)).map(it => normalize(it, null)).filter(Boolean);
       if (token !== reqToken) return;
       const n = renderFacilities(items);
       n === 0 ? setError('검색 결과가 없어요. 다른 키워드로 시도해 주세요.') : resetPanel(n);
