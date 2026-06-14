@@ -1275,9 +1275,10 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     };
   }
 
-  /* ── Edge Function 프록시 호출 (카카오 로컬 키워드 검색) ── */
+  /* ── Edge Function 프록시 호출 (카카오 로컬 키워드 검색) ──
+     opts: { keyword, size, x, y, radius } — x/y/radius 있으면 좌표 기반 검색 */
   const EDGE_URL = 'https://cigqhqcnvnzdengoejsl.supabase.co/functions/v1/naver-local';
-  async function searchPlaces(keyword, size) {
+  async function searchPlaces(opts) {
     const res = await fetch(EDGE_URL, {
       method: 'POST',
       headers: {
@@ -1285,7 +1286,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
         'apikey': SUPABASE_ANON_KEY
       },
-      body: JSON.stringify({ keyword: keyword, size: size || 45 })
+      body: JSON.stringify({ keyword: opts.keyword, size: opts.size || 45, x: opts.x, y: opts.y, radius: opts.radius })
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
@@ -1293,9 +1294,9 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     return Array.isArray(data) ? data : (data.items || data.documents || []);
   }
 
-  /* ── 핀 렌더 ── */
+  /* ── 핀 렌더 (fit=true면 결과 영역으로 지도 이동) ── */
   function clearMarkers() { markers.forEach(m => m.setMap(null)); markers = []; }
-  function renderFacilities(items) {
+  function renderFacilities(items, fit) {
     if (!map) return 0;
     clearMarkers();
     const bounds = new naver.maps.LatLngBounds();
@@ -1309,67 +1310,59 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
       naver.maps.Event.addListener(marker, 'click', () => showCard(f));
       markers.push(marker); bounds.extend(pos); n++;
     });
-    if (n > 0) map.fitBounds(bounds);
+    if (fit && n > 0) { suppressIdle(); map.fitBounds(bounds); }
     return n;
   }
 
   let reqToken = 0;
-  const REGION = '강남';   /* 카테고리 탭 검색 시 앞에 붙는 지역 (예: "강남 헬스장") */
+  let autoSuppress = false, suppressTimer = null, idleTimer = null;
+  /* 프로그래밍 방식 지도 이동 시 idle 자동검색 1회 무시 */
+  function suppressIdle() { autoSuppress = true; clearTimeout(suppressTimer); suppressTimer = setTimeout(() => { autoSuppress = false; }, 1300); }
+  function centerXY() { const c = map.getCenter(); return { x: c.lng(), y: c.lat() }; }
+  function dedupe(arr) { const seen = new Set(); return arr.filter(f => { const k = f.name + '|' + f.addr; if (seen.has(k)) return false; seen.add(k); return true; }); }
 
-  /* 탭: 전체=모든 종목 병합, 개별=해당 종목 키워드 검색 */
-  async function loadCategory(cat) {
+  /* 통합 검색
+     - center {x,y} 지정 → 좌표 기반(반경 2km), 지도 이동 안 함
+     - regionText 지정 → "지역명 + 종목" 키워드 검색, 결과로 지도 이동(fit) */
+  async function runSearch({ center, regionText }) {
     if (!map) return;
     const token = ++reqToken;
     setLoading();
     try {
-      const targets = (cat === '전체') ? CATS : CATS.filter(c => c.cat === cat);
+      const targets = (activeCat === '전체') ? CATS : CATS.filter(c => c.cat === activeCat);
       const lists = await Promise.all(targets.map(async c => {
-        const items = await searchPlaces(REGION + ' ' + c.keyword, 45);
+        const opts = { size: 45 };
+        if (center) { opts.keyword = c.keyword; opts.x = center.x; opts.y = center.y; opts.radius = 2000; }
+        else { opts.keyword = (regionText + ' ' + c.keyword).trim(); }
+        const items = await searchPlaces(opts);
         return items.map(it => normalize(it, c.cat)).filter(Boolean);
       }));
-      let merged = [].concat(...lists);
-      const seen = new Set();
-      merged = merged.filter(f => { const k = f.name + '|' + f.addr; if (seen.has(k)) return false; seen.add(k); return true; });
+      const merged = dedupe([].concat(...lists));
       if (token !== reqToken) return;
-      const n = renderFacilities(merged);
-      resetPanel(n);
+      const n = renderFacilities(merged, !center);   // 키워드 검색만 지도 이동
+      n === 0 ? setError('이 조건에 맞는 시설이 없어요.<br>다른 지역·종목으로 시도해 보세요.') : resetPanel(n);
     } catch (e) {
       if (token !== reqToken) return;
       setError('시설 정보를 불러오지 못했어요.<br>검색 프록시(Edge Function) 배포 상태를 확인해 주세요.');
     }
   }
 
-  /* 검색: 입력 키워드로 지역검색 */
-  async function searchKeyword(q) {
-    if (!map || !q) return;
-    const token = ++reqToken;
-    setLoading();
-    try {
-      const items = (await searchPlaces(q, 45)).map(it => normalize(it, null)).filter(Boolean);
-      if (token !== reqToken) return;
-      const n = renderFacilities(items);
-      n === 0 ? setError('검색 결과가 없어요. 다른 키워드로 시도해 주세요.') : resetPanel(n);
-    } catch (e) {
-      if (token !== reqToken) return;
-      setError('검색에 실패했어요. 잠시 후 다시 시도해 주세요.');
-    }
-  }
-
+  /* ③ 종목 탭: 현재 지도 중심 기준 재검색 */
   tabs.addEventListener('click', e => {
     const tab = e.target.closest('.mf-tab');
     if (!tab) return;
     tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     activeCat = tab.dataset.cat;
-    searchInput.value = '';
-    loadCategory(activeCat);
+    runSearch({ center: centerXY() });
   });
 
+  /* ② 검색창: "입력 지역 + 선택 종목" 키워드 검색 → 지도 이동 */
   searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); const q = searchInput.value.trim(); if (q) searchKeyword(q); }
+    if (e.key === 'Enter') { e.preventDefault(); const q = searchInput.value.trim(); if (q) runSearch({ regionText: q }); }
   });
 
-  /* 현재 위치 */
+  /* ① 현재 위치: 좌표 기준 반경 2km 검색 */
   locBtn.addEventListener('click', () => {
     if (!navigator.geolocation) { alert('이 브라우저에서는 위치 기능을 사용할 수 없어요.'); return; }
     locBtn.textContent = '위치 확인 중...';
@@ -1377,15 +1370,16 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
       pos => {
         userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         locBtn.textContent = '📍 현재 위치';
-        if (map) {
-          map.setCenter(new naver.maps.LatLng(userPos.lat, userPos.lng));
-          map.setZoom(15);
-          if (meMarker) meMarker.setMap(null);
-          meMarker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(userPos.lat, userPos.lng), map: map,
-            icon: { content: '<div class="mf-pin me"><span>📍</span></div>', anchor: new naver.maps.Point(17, 34) }
-          });
-        }
+        if (!map) return;
+        suppressIdle();
+        map.setCenter(new naver.maps.LatLng(userPos.lat, userPos.lng));
+        map.setZoom(15);
+        if (meMarker) meMarker.setMap(null);
+        meMarker = new naver.maps.Marker({
+          position: new naver.maps.LatLng(userPos.lat, userPos.lng), map: map,
+          icon: { content: '<div class="mf-pin me"><span>📍</span></div>', anchor: new naver.maps.Point(17, 34) }
+        });
+        runSearch({ center: { x: userPos.lng, y: userPos.lat } });
       },
       () => { locBtn.textContent = '📍 현재 위치'; alert('위치를 가져오지 못했어요. 브라우저 위치 권한을 확인해 주세요.'); }
     );
@@ -1402,13 +1396,19 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     if (!(window.naver && naver.maps && naver.maps.Map)) return;
     fallback.style.display = 'none';
     map = new naver.maps.Map('mf-map', {
-      center: new naver.maps.LatLng(37.5172, 127.0286),
-      zoom: 12
+      center: new naver.maps.LatLng(37.4979, 127.0276),  // 강남 기준
+      zoom: 14
     });
-    /* 기본값: 헬스장 검색 */
+    /* ④ 지도 이동(드래그/줌) → 멈춘 뒤 1초 debounce 재검색 */
+    naver.maps.Event.addListener(map, 'idle', () => {
+      if (autoSuppress) return;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => runSearch({ center: centerXY() }), 1000);
+    });
+    /* 기본값: 헬스장 탭 + 현재 중심(강남) 기준 검색 */
     activeCat = '헬스장';
     tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === '헬스장'));
-    loadCategory('헬스장');
+    runSearch({ center: centerXY() });
   };
   /* 네이버 인증 실패(Client ID에 접속 URL 미등록 등) 시 호출되는 전역 훅 */
   window.navermap_authFailure = function () {
