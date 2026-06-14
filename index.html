@@ -1203,20 +1203,16 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
   const NAVER_MAP_CLIENT_ID = 'jhyc08fg9y';
   const SCRIPT_BASE = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=';
 
-  /* 샘플 시설 데이터 — 실제 서비스에서는 백엔드(네이버 지역 검색 프록시 등)로 교체
-     cat: 탭 종목 / icon: 핀에 표시할 아이콘(색상은 단일 프라이머리) */
-  const FACILITIES = [
-    { name: '아이언짐 강남', cat: '헬스장', icon: '🏋️', addr: '서울 강남구 테헤란로 124', hours: '평일 06:00–24:00 · 주말 08:00–22:00', lat: 37.4998, lng: 127.0297 },
-    { name: '코어 필라테스 역삼', cat: '필라테스', icon: '🤸', addr: '서울 강남구 역삼로 180', hours: '평일 07:00–22:00 · 토 09:00–18:00', lat: 37.5005, lng: 127.0360 },
-    { name: '플로우 요가 스튜디오', cat: '요가', icon: '🧘', addr: '서울 성동구 왕십리로 115', hours: '매일 08:00–22:00', lat: 37.5445, lng: 127.0558 },
-    { name: '블루레인 수영장', cat: '수영', icon: '🏊', addr: '서울 송파구 올림픽로 300', hours: '평일 06:00–21:00 · 주말 08:00–18:00', lat: 37.5139, lng: 127.1058 },
-    { name: '크로스핏 한강', cat: '크로스핏', icon: '💪', addr: '서울 마포구 양화로 45', hours: '평일 06:00–23:00 · 토 09:00–17:00', lat: 37.5503, lng: 126.9143 },
-    { name: '에이스 테니스 클럽', cat: '라켓', icon: '🎾', addr: '서울 강남구 논현로 430', hours: '매일 06:00–24:00', lat: 37.5042, lng: 127.0220 },
-    { name: '파워핏 합정', cat: '헬스장', icon: '🏋️', addr: '서울 마포구 독막로 130', hours: '24시간 운영', lat: 37.5492, lng: 126.9135 },
-    { name: '밸런스 필라테스 잠실', cat: '필라테스', icon: '🤸', addr: '서울 송파구 백제고분로 35', hours: '평일 07:00–22:00', lat: 37.5078, lng: 127.0858 },
-    { name: '선셋 요가 연남', cat: '요가', icon: '🧘', addr: '서울 마포구 성미산로 160', hours: '매일 09:00–21:00', lat: 37.5640, lng: 126.9255 },
-    { name: '스매시 배드민턴 성수', cat: '라켓', icon: '🎾', addr: '서울 성동구 성수일로 77', hours: '매일 06:00–23:00', lat: 37.5443, lng: 127.0560 }
+  /* 종목 탭 → 네이버 지역검색 키워드 / 핀 아이콘(색상은 단일 프라이머리) */
+  const CATS = [
+    { cat: '헬스장',  keyword: '헬스장',  icon: '🏋️' },
+    { cat: '필라테스', keyword: '필라테스', icon: '🤸' },
+    { cat: '요가',    keyword: '요가',    icon: '🧘' },
+    { cat: '수영',    keyword: '수영장',  icon: '🏊' },
+    { cat: '크로스핏', keyword: '크로스핏', icon: '💪' },
+    { cat: '라켓',    keyword: '테니스장', icon: '🎾' }
   ];
+  const ICON_OF = c => (CATS.find(x => x.cat === c) || {}).icon || '📍';
 
   const tabs = document.getElementById('mf-tabs');
   const panel = document.getElementById('mf-panel');
@@ -1246,65 +1242,131 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     panel.innerHTML =
       '<span class="mf-card-cat">' + f.icon + ' ' + f.cat + '</span>' +
       '<h3>' + f.name + '</h3>' +
-      '<div class="row"><span class="k">주소</span><span>' + f.addr + '</span></div>' +
+      '<div class="row"><span class="k">주소</span><span>' + (f.addr || '-') + '</span></div>' +
       '<div class="row"><span class="k">도보거리</span><span>' + walkText(f) + '</span></div>' +
-      '<div class="row"><span class="k">운영시간</span><span>' + f.hours + '</span></div>' +
+      (f.tel ? '<div class="row"><span class="k">전화</span><span>' + f.tel + '</span></div>' : '') +
       '<div class="note">🎁 ullo 출시 후 이 시설을 크레딧으로 이용할 수 있어요</div>';
   }
-  function resetPanel() {
-    panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">🗺️</div><p>지도의 핀을 선택하면<br>시설 정보가 여기에 표시돼요.</p></div>';
+  function resetPanel(n) {
+    const msg = (typeof n === 'number')
+      ? '주변 시설 <strong>' + n + '곳</strong>을 찾았어요.<br>핀을 선택하면 정보가 표시돼요.'
+      : '지도의 핀을 선택하면<br>시설 정보가 여기에 표시돼요.';
+    panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">🗺️</div><p>' + msg + '</p></div>';
+  }
+  function setLoading() {
+    panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">⏳</div><p>주변 시설을 불러오는 중이에요...</p></div>';
+  }
+  function setError(msg) {
+    panel.innerHTML = '<div class="mf-panel-empty"><div class="ic">⚠️</div><p>' + msg + '</p></div>';
   }
 
+  /* ── 좌표/데이터 변환 ── */
+  function toLatLng(item) {
+    const x = Number(item.mapx), y = Number(item.mapy);
+    if (!x || !y) return null;
+    if (x > 1e8 || y > 1e8) return { lat: y / 1e7, lng: x / 1e7 };           // 현 지역검색: 경도·위도 × 1e7
+    if (window.naver && naver.maps && naver.maps.TransCoord) {               // 구 KATEC(TM128) 대응
+      const p = naver.maps.TransCoord.fromTM128ToLatLng(new naver.maps.Point(x, y));
+      return { lat: p.lat(), lng: p.lng() };
+    }
+    return null;
+  }
+  const stripTags = s => (s || '').replace(/<[^>]*>/g, '');
+  function normalize(item, cat) {
+    const ll = toLatLng(item);
+    if (!ll) return null;
+    return {
+      name: stripTags(item.title),
+      cat: cat || ((item.category || '').split('>').pop() || '시설').trim(),
+      addr: item.roadAddress || item.address || '',
+      tel: item.telephone || '',
+      icon: ICON_OF(cat),
+      lat: ll.lat, lng: ll.lng
+    };
+  }
+
+  /* ── Edge Function 프록시 호출 ── */
+  async function naverLocal(keyword, display) {
+    const { data, error } = await sb.functions.invoke('naver-local', { body: { keyword: keyword, display: display || 5 } });
+    if (error) throw error;
+    if (data && data.error) throw new Error(data.error);
+    return (data && data.items) || [];
+  }
+
+  /* ── 핀 렌더 ── */
   function clearMarkers() { markers.forEach(m => m.setMap(null)); markers = []; }
-  function renderMarkers() {
-    if (!map) return;
+  function renderFacilities(items) {
+    if (!map) return 0;
     clearMarkers();
-    FACILITIES.filter(f => activeCat === '전체' || f.cat === activeCat).forEach(f => {
+    const bounds = new naver.maps.LatLngBounds();
+    let n = 0;
+    items.forEach(f => {
+      const pos = new naver.maps.LatLng(f.lat, f.lng);
       const marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(f.lat, f.lng),
-        map: map,
+        position: pos, map: map,
         icon: { content: '<div class="mf-pin"><span>' + f.icon + '</span></div>', anchor: new naver.maps.Point(17, 34) }
       });
       naver.maps.Event.addListener(marker, 'click', () => showCard(f));
-      markers.push(marker);
+      markers.push(marker); bounds.extend(pos); n++;
     });
+    if (n > 0) map.fitBounds(bounds);
+    return n;
   }
 
-  /* 탭: 종목 필터 */
+  let reqToken = 0;
+
+  /* 탭: 전체=모든 종목 병합, 개별=해당 종목 키워드 검색 */
+  async function loadCategory(cat) {
+    if (!map) return;
+    const token = ++reqToken;
+    setLoading();
+    try {
+      const targets = (cat === '전체') ? CATS : CATS.filter(c => c.cat === cat);
+      const lists = await Promise.all(targets.map(async c => {
+        const items = await naverLocal(c.keyword, 5);
+        return items.map(it => normalize(it, c.cat)).filter(Boolean);
+      }));
+      let merged = [].concat(...lists);
+      const seen = new Set();
+      merged = merged.filter(f => { const k = f.name + '|' + f.addr; if (seen.has(k)) return false; seen.add(k); return true; });
+      if (token !== reqToken) return;
+      const n = renderFacilities(merged);
+      resetPanel(n);
+    } catch (e) {
+      if (token !== reqToken) return;
+      setError('시설 정보를 불러오지 못했어요.<br>검색 프록시(Edge Function) 배포 상태를 확인해 주세요.');
+    }
+  }
+
+  /* 검색: 입력 키워드로 지역검색 */
+  async function searchKeyword(q) {
+    if (!map || !q) return;
+    const token = ++reqToken;
+    setLoading();
+    try {
+      const items = (await naverLocal(q, 5)).map(it => normalize(it, null)).filter(Boolean);
+      if (token !== reqToken) return;
+      const n = renderFacilities(items);
+      n === 0 ? setError('검색 결과가 없어요. 다른 키워드로 시도해 주세요.') : resetPanel(n);
+    } catch (e) {
+      if (token !== reqToken) return;
+      setError('검색에 실패했어요. 잠시 후 다시 시도해 주세요.');
+    }
+  }
+
   tabs.addEventListener('click', e => {
     const tab = e.target.closest('.mf-tab');
     if (!tab) return;
     tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     activeCat = tab.dataset.cat;
-    renderMarkers();
-    resetPanel();
+    searchInput.value = '';
+    loadCategory(activeCat);
   });
 
-  /* 검색: 시설명 우선, 없으면 지오코딩으로 지도 이동 */
-  function doSearch() {
-    const q = searchInput.value.trim();
-    if (!q || !map) return;
-    const hit = FACILITIES.find(f => f.name.includes(q));
-    if (hit) {
-      map.setCenter(new naver.maps.LatLng(hit.lat, hit.lng));
-      map.setZoom(15);
-      showCard(hit);
-      return;
-    }
-    if (naver.maps.Service && naver.maps.Service.geocode) {
-      naver.maps.Service.geocode({ query: q }, (status, res) => {
-        if (status === naver.maps.Service.Status.OK && res.v2.addresses.length) {
-          const a = res.v2.addresses[0];
-          map.setCenter(new naver.maps.LatLng(+a.y, +a.x));
-          map.setZoom(15);
-        } else {
-          alert('검색 결과가 없습니다. 다른 키워드로 시도해 주세요.');
-        }
-      });
-    }
-  }
-  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); const q = searchInput.value.trim(); if (q) searchKeyword(q); }
+  });
 
   /* 현재 위치 */
   locBtn.addEventListener('click', () => {
@@ -1342,7 +1404,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
       center: new naver.maps.LatLng(37.5172, 127.0286),
       zoom: 12
     });
-    renderMarkers();
+    loadCategory('전체');
   };
   /* 네이버 인증 실패(Client ID에 접속 URL 미등록 등) 시 호출되는 전역 훅 */
   window.navermap_authFailure = function () {
