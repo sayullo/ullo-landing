@@ -257,10 +257,12 @@ section{padding:100px 40px;scroll-margin-top:62px}
 .mf-tab{border:1px solid var(--border-default);background:#fff;border-radius:100px;padding:9px 18px;font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:background .15s,border-color .15s,color .15s}
 .mf-tab:hover{border-color:var(--primary);color:var(--primary)}
 .mf-tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
-.mf-search{display:flex;gap:10px;margin-top:14px}
-.mf-search-box{position:relative;flex:1}
+.mf-search{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.mf-search-box{position:relative;flex:1;min-width:200px}
 .mf-search-box input{width:100%;border:1px solid var(--border-default);border-radius:10px;padding:14px 16px;font-size:16px;font-family:inherit;color:var(--text-primary);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
 .mf-search-box input:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(0,100,255,.3)}
+.mf-search-btn{flex:none;display:inline-flex;align-items:center;gap:7px;border:none;background:var(--primary);color:#fff;border-radius:10px;padding:0 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s,transform .15s;white-space:nowrap}
+.mf-search-btn:hover{background:var(--primary-pressed);transform:translateY(-1px)}
 .mf-loc-btn{flex:none;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border-default);background:#fff;border-radius:10px;padding:0 18px;font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:border-color .15s,color .15s;white-space:nowrap}
 .mf-loc-btn:hover{border-color:var(--primary);color:var(--primary)}
 .mf-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;margin-top:16px}
@@ -273,15 +275,24 @@ section{padding:100px 40px;scroll-margin-top:62px}
 .mf-panel-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:var(--text-disabled)}
 .mf-panel-empty .ic{font-size:30px}
 .mf-panel-empty p{font-size:13.5px;line-height:1.6}
-.mf-card-cat{display:inline-flex;font-size:12px;font-weight:800;background:var(--primary-bg);color:var(--primary);padding:5px 12px;border-radius:6px;margin-bottom:14px}
-.mf-card h3{font-size:20px;font-weight:800;margin-bottom:14px;line-height:1.3}
-.mf-card .row{display:flex;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.6;padding:10px 0;border-top:1px solid var(--border-default)}
-.mf-card .row .k{flex:none;color:var(--text-disabled);width:62px;font-weight:600}
-.mf-card .note{margin-top:18px;background:var(--primary-bg);border-radius:10px;padding:14px 16px;font-size:13px;font-weight:600;color:var(--primary);line-height:1.6}
+.mf-card-cat{display:inline-flex;font-size:12px;font-weight:800;background:var(--primary-bg);color:var(--primary);padding:5px 12px;border-radius:6px;margin-bottom:16px}
+.mf-card h3{font-size:21px;font-weight:800;margin-bottom:28px;line-height:1.35}
+.mf-card .rows{border-top:1px solid var(--border-default)}
+.mf-card .row{display:flex;gap:8px;font-size:14.5px;color:var(--text-secondary);line-height:1.7;padding:16px 0;border-bottom:1px solid var(--border-default)}
+.mf-card .row .k{flex:none;color:var(--text-primary);font-weight:700}
+.mf-card .row .k::after{content:':';margin-left:4px;color:var(--text-disabled);font-weight:500}
+.mf-card .row .v{flex:1;word-break:break-all}
 .mf-cta{margin-top:32px;background:var(--text-primary);color:#fff;border-radius:16px;padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .mf-cta p{font-size:clamp(17px,2.2vw,22px);font-weight:800;line-height:1.4}
-.mf-pin{width:34px;height:34px;border-radius:50% 50% 50% 0;background:var(--primary);transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3);border:2px solid #fff;cursor:pointer}
-.mf-pin span{transform:rotate(45deg);font-size:15px;line-height:1}
+/* 시설 핀 — 깔끔한 원형 마커 + 포인터 (지도앱 스타일) */
+.mf-pin{position:relative;width:38px;height:38px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.22);border:2.5px solid #fff;cursor:pointer}
+.mf-pin span{font-size:18px;line-height:1}
+.mf-pin::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--primary)}
+/* 현재 위치 — 표준 내 위치 표시(점+펄스 링) */
+.mf-me{position:relative;width:18px;height:18px}
+.mf-me .dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--primary);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.3);z-index:2}
+.mf-me .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:rgba(0,100,255,.3);animation:mePulse 1.8s ease-out infinite}
+@keyframes mePulse{0%{width:16px;height:16px;opacity:.7}100%{width:56px;height:56px;opacity:0}}
 .mf-pin.me{background:#1A1A1A}
 
 /* ===== HOW / PROCESS 공통 ===== */
@@ -713,12 +724,19 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
         <button type="button" class="mf-tab" data-cat="라켓">라켓</button>
       </div>
 
-      <!-- ② 검색창 + 현재 위치 -->
+      <!-- ② 검색창 + 검색 버튼 + 현재 위치 -->
       <div class="mf-search reveal">
         <div class="mf-search-box">
           <input type="text" id="mf-search-input" placeholder="지역 또는 시설명 검색" autocomplete="off">
         </div>
-        <button class="mf-loc-btn" id="mf-loc-btn" type="button">📍 현재 위치</button>
+        <button class="mf-search-btn" id="mf-search-btn" type="button">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
+          검색
+        </button>
+        <button class="mf-loc-btn" id="mf-loc-btn" type="button">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          현재 위치
+        </button>
       </div>
 
       <!-- ③ 지도 + ④ 시설 카드 -->
@@ -1240,12 +1258,15 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
 
   function showCard(f) {
     panel.innerHTML =
+      '<div class="mf-card">' +
       '<span class="mf-card-cat">' + f.icon + ' ' + f.cat + '</span>' +
       '<h3>' + f.name + '</h3>' +
-      '<div class="row"><span class="k">주소</span><span>' + (f.addr || '-') + '</span></div>' +
-      '<div class="row"><span class="k">도보거리</span><span>' + walkText(f) + '</span></div>' +
-      (f.tel ? '<div class="row"><span class="k">전화</span><span>' + f.tel + '</span></div>' : '') +
-      '<div class="note">🎁 ullo 출시 후 이 시설을 크레딧으로 이용할 수 있어요</div>';
+      '<div class="rows">' +
+        '<div class="row"><span class="k">주소</span><span class="v">' + (f.addr || '-') + '</span></div>' +
+        '<div class="row"><span class="k">도보거리</span><span class="v">' + walkText(f) + '</span></div>' +
+        (f.tel ? '<div class="row"><span class="k">전화</span><span class="v">' + f.tel + '</span></div>' : '') +
+      '</div>' +
+      '</div>';
   }
   function resetPanel(n) {
     const msg = (typeof n === 'number')
@@ -1305,7 +1326,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
       const pos = new naver.maps.LatLng(f.lat, f.lng);
       const marker = new naver.maps.Marker({
         position: pos, map: map,
-        icon: { content: '<div class="mf-pin"><span>' + f.icon + '</span></div>', anchor: new naver.maps.Point(17, 34) }
+        icon: { content: '<div class="mf-pin"><span>' + f.icon + '</span></div>', anchor: new naver.maps.Point(19, 45) }
       });
       naver.maps.Event.addListener(marker, 'click', () => showCard(f));
       markers.push(marker); bounds.extend(pos); n++;
@@ -1357,10 +1378,10 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     runSearch({ center: centerXY() });
   });
 
-  /* ② 검색창: "입력 지역 + 선택 종목" 키워드 검색 → 지도 이동 */
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); const q = searchInput.value.trim(); if (q) runSearch({ regionText: q }); }
-  });
+  /* ② 검색창: "입력 지역 + 선택 종목" 키워드 검색 → 지도 이동 (Enter 또는 검색 버튼) */
+  function runInputSearch() { const q = searchInput.value.trim(); if (q) runSearch({ regionText: q }); }
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); runInputSearch(); } });
+  document.getElementById('mf-search-btn').addEventListener('click', runInputSearch);
 
   /* ① 현재 위치: 좌표 기준 반경 2km 검색 */
   locBtn.addEventListener('click', () => {
@@ -1377,7 +1398,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
         if (meMarker) meMarker.setMap(null);
         meMarker = new naver.maps.Marker({
           position: new naver.maps.LatLng(userPos.lat, userPos.lng), map: map,
-          icon: { content: '<div class="mf-pin me"><span>📍</span></div>', anchor: new naver.maps.Point(17, 34) }
+          icon: { content: '<div class="mf-me"><div class="ring"></div><div class="dot"></div></div>', anchor: new naver.maps.Point(9, 9) }
         });
         runSearch({ center: { x: userPos.lng, y: userPos.lat } });
       },
