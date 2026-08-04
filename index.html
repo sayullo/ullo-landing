@@ -357,6 +357,33 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
 .footer-biz .sep{margin:0 10px;color:var(--border-strong)}
 .footer-copy{margin-top:18px;font-size:12.5px;color:var(--text-disabled)}
 
+/* ===== 요금 안내 (PRICING) — 신규 ===== */
+.pr-tabs{margin-top:52px}
+.pr-tab-panel[hidden]{display:none}
+.pr-plan-row{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.pr-plan-row .uv-num{margin-bottom:0}
+.pr-badge-inline{display:inline-flex;align-items:center;font-size:11px;font-weight:800;letter-spacing:0.04em;background:var(--primary);color:#fff;padding:3px 10px;border-radius:100px;line-height:1.4}
+.pr-price-row{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.pr-price-old{font-size:14px;color:var(--text-disabled);text-decoration:line-through}
+.pr-discount{font-size:12px;font-weight:800;color:var(--primary);background:var(--primary-bg);padding:3px 10px;border-radius:100px;white-space:nowrap}
+.pr-price{font-size:30px;font-weight:800;letter-spacing:-0.02em;color:var(--primary);margin:6px 0 4px}
+.pr-price span{font-size:14px;font-weight:600;color:var(--text-secondary);margin-left:4px}
+.pr-credit{font-size:14px;color:var(--text-secondary);margin-bottom:4px}
+.pr-per-credit{font-size:13px;color:var(--text-secondary);margin-bottom:16px}
+.pr-method{display:inline-block;margin-top:16px;font-size:12.5px;font-weight:700;color:var(--primary);background:var(--primary-bg);padding:6px 12px;border-radius:8px}
+.pr-featured{border-color:var(--primary);background:#fff;box-shadow:0 14px 34px rgba(0,100,255,0.12)}
+.pr-featured:hover{box-shadow:0 18px 40px rgba(0,100,255,0.18)}
+.pr-note{margin-top:40px;background:var(--bg-section);border:1px solid var(--border-default);border-radius:16px;padding:28px 32px;font-size:14.5px;color:var(--text-secondary);line-height:1.85}
+.pr-note strong{color:var(--text-primary)}
+.pr-table-wrap{margin-top:56px;overflow-x:auto}
+.pr-table{width:100%;border-collapse:collapse;min-width:520px}
+.pr-table th,.pr-table td{text-align:left;padding:16px 18px;font-size:14.5px;border-bottom:1px solid var(--border-default)}
+.pr-table th{color:var(--text-primary);font-weight:800;background:var(--bg-section)}
+.pr-table td{color:var(--text-secondary);line-height:1.6}
+.pr-pay{margin-top:56px;background:var(--bg-section);border:1px solid var(--border-default);border-radius:16px;padding:32px 36px}
+.pr-pay h4{font-size:18px;font-weight:800;margin-bottom:10px}
+.pr-pay p{font-size:14.5px;color:var(--text-secondary);line-height:1.8}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .uv-grid,.pt-grid,.val-grid,.how-steps{grid-template-columns:1fr}
@@ -412,6 +439,7 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
   <div class="nav-btns">
     <a class="nav-link" href="#service">서비스 소개</a>
     <a class="nav-link" href="#partner-intro">파트너 모집</a>
+    <a class="nav-link" href="#pricing">요금 안내</a>
     <a class="btn btn-ghost btn-sm" href="#partner">파트너 신청</a>
     <a class="btn btn-primary btn-sm" href="#booking">사전 예약</a>
   </div>
@@ -574,8 +602,8 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
             <span class="sim-val" id="credits-val">2개</span>
           </div>
           <div class="sim-row">
-            <span class="sim-label">적용 수수료율</span>
-            <input type="range" class="sim-slider" id="fee" min="15" max="20" step="1" value="20">
+            <span class="sim-label">예상 수수료율 범위</span>
+            <input type="range" class="sim-slider" id="fee" min="10" max="20" step="1" value="20">
             <span class="sim-val" id="fee-val">20%</span>
           </div>
           <hr class="sim-divider">
@@ -584,7 +612,7 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
             <div class="sim-result-num" id="result">270,000원</div>
             <div class="sim-result-sub" id="result-sub">50회 × 2크레딧 × 3,000원 × (1 - 20%)</div>
           </div>
-          <p class="sim-note">※ 크레딧 1개 = 3,000원 기준 / 실제 정산 금액은 운영 조건에 따라 달라질 수 있습니다</p>
+          <p class="sim-note">※ 크레딧 1개 = 3,000원 기준 / 실제 정산 금액은 운영 조건에 따라 달라질 수 있습니다 / 정확한 수수료 조건은 입점 상담 시 안내드립니다</p>
         </div>
       </div>
 
@@ -1048,6 +1076,120 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
 
 </div><!-- /view-partner -->
 
+<!-- ════════════════ VIEW : 요금 안내 ════════════════ -->
+<div id="view-pricing" class="view" hidden>
+
+  <!-- 크레딧 요금제 -->
+  <section id="pricing-plans">
+    <div class="inner">
+      <div class="sec-tag reveal">Pricing</div>
+      <h2 class="sec-title reveal">필요한 만큼,<br>크레딧으로 시작하세요</h2>
+      <p class="sec-sub reveal">1크레딧은 3,000원 상당이며, 수업마다 소요 크레딧이 달라요. 필요할 때만 개별로 구매하거나 정기 구독으로 매달 자동 충전할 수 있어요.</p>
+
+      <div class="mf-tabs pr-tabs reveal" id="pr-tabs">
+        <button type="button" class="mf-tab active" data-pr-tab="onetime">개별 구매</button>
+        <button type="button" class="mf-tab" data-pr-tab="subscription">정기 구독</button>
+      </div>
+
+      <!-- 개별 구매 -->
+      <div class="pr-tab-panel reveal" data-pr-panel="onetime">
+        <div class="uv-grid">
+          <div class="uv-card pr-card">
+            <div class="uv-num">SILVER</div>
+            <div class="pr-credit">25크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">75,000원</span><span class="pr-discount">3% 할인</span></div>
+            <div class="pr-price">72,750원</div>
+            <div class="pr-per-credit">1크레딧당 2,910원</div>
+            <p>가끔 이용하는 분들을 위한 구성이에요.<br>월 2~3회 이용에 적합해요.</p>
+            <span class="pr-method">개별 구매 · 1회성 결제</span>
+          </div>
+          <div class="uv-card pr-card pr-featured">
+            <div class="pr-plan-row"><div class="uv-num">GOLD</div><span class="pr-badge-inline">가장인기</span></div>
+            <div class="pr-credit">50크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">150,000원</span><span class="pr-discount">5% 할인</span></div>
+            <div class="pr-price">142,500원</div>
+            <div class="pr-per-credit">1크레딧당 2,850원</div>
+            <p>정기적으로 운동하는 분들을 위한 구성이에요.<br>월 5~6회 이용에 적합해요.</p>
+            <span class="pr-method">개별 구매 · 1회성 결제</span>
+          </div>
+          <div class="uv-card pr-card">
+            <div class="uv-num">PLATINUM</div>
+            <div class="pr-credit">80크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">240,000원</span><span class="pr-discount">8% 할인</span></div>
+            <div class="pr-price">220,800원</div>
+            <div class="pr-per-credit">1크레딧당 2,760원</div>
+            <p>헤비 유저를 위한 구성이에요.<br>월 8회 이상 이용에 적합해요.</p>
+            <span class="pr-method">개별 구매 · 1회성 결제</span>
+          </div>
+        </div>
+        <div class="pr-note">
+          <strong>유효기간 안내</strong><br>
+          개별 구매한 크레딧은 구매일로부터 60일간 이월되어 사용할 수 있어요. 유효기간 만료 7일 전 앱 푸시로 미리 알려드려요.
+        </div>
+        <!-- Bronze, Max 플랜은 추후 "더보기"로 확장 가능하도록 카드 목록 구조를 유지 -->
+      </div>
+
+      <!-- 정기 구독 -->
+      <div class="pr-tab-panel reveal" data-pr-panel="subscription" hidden>
+        <div class="uv-grid">
+          <div class="uv-card pr-card">
+            <div class="uv-num">STARTER</div>
+            <div class="pr-credit">월 25크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">75,000원</span><span class="pr-discount">5% 할인</span></div>
+            <div class="pr-price">71,250원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,850원</div>
+            <p>주 1회 꾸준히 운동하는 분들을 위한 구성이에요.</p>
+            <span class="pr-method">구독 · 매달 자동 결제</span>
+          </div>
+          <div class="uv-card pr-card pr-featured">
+            <div class="pr-plan-row"><div class="uv-num">BASIC</div><span class="pr-badge-inline">가장인기</span></div>
+            <div class="pr-credit">월 35크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">105,000원</span><span class="pr-discount">7% 할인</span></div>
+            <div class="pr-price">97,650원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,790원</div>
+            <p>주 1~2회 규칙적으로 운동하는 분들을 위한 구성이에요.</p>
+            <span class="pr-method">구독 · 매달 자동 결제</span>
+          </div>
+          <div class="uv-card pr-card">
+            <div class="uv-num">PLUS</div>
+            <div class="pr-credit">월 60크레딧</div>
+            <div class="pr-price-row"><span class="pr-price-old">180,000원</span><span class="pr-discount">9% 할인</span></div>
+            <div class="pr-price">163,800원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,730원</div>
+            <p>주 2~3회 활발하게 운동하는 분들을 위한 구성이에요.</p>
+            <span class="pr-method">구독 · 매달 자동 결제</span>
+          </div>
+        </div>
+        <div class="pr-note">
+          <strong>유효기간 안내</strong><br>
+          정기 구독은 매월 충전되는 크레딧이 충전일로부터 90일간 유효해요. 구독을 해지하면 남은 크레딧은 해지일로부터 15일 후 소멸돼요.
+        </div>
+        <!-- Bronze, Max 플랜은 추후 "더보기"로 확장 가능하도록 카드 목록 구조를 유지 -->
+      </div>
+
+      <div class="pr-table-wrap reveal">
+        <table class="pr-table">
+          <thead>
+            <tr><th>상황</th><th>환불 · 취소 규정</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>크레딧 미사용</td><td>구매일로부터 7일 이내 신청 시 전액 환불</td></tr>
+            <tr><td>크레딧 일부 사용</td><td>사용한 크레딧 금액을 차감한 잔여 크레딧만 환불</td></tr>
+            <tr><td>유효기간 경과</td><td>소멸된 크레딧은 환불 대상에서 제외</td></tr>
+            <tr><td>구독 정기결제 해지</td><td>다음 결제일 전까지 해지 시 추가 결제 없이 즉시 해지, 이미 충전된 크레딧은 유효기간까지 사용 가능</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pr-pay reveal">
+        <h4>결제 수단</h4>
+        <p>모든 결제는 KG이니시스(INICIS) 결제 시스템을 통해 신용카드로 안전하게 진행됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-pricing -->
+
 <!-- ===== FOOTER (공통) : 사업자 정보 ===== -->
 <footer>
   <div class="footer-inner">
@@ -1072,7 +1214,8 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
 const views = {
   home: document.getElementById('view-home'),
   booking: document.getElementById('view-booking'),
-  partner: document.getElementById('view-partner')
+  partner: document.getElementById('view-partner'),
+  pricing: document.getElementById('view-pricing')
 };
 /* 해시 → [보여줄 화면, 스크롤 대상 id] */
 const routes = {
@@ -1084,7 +1227,8 @@ const routes = {
   'booking': ['booking', null],
   'register': ['booking', 'register'],
   'partner': ['partner', null],
-  'apply': ['partner', 'apply']
+  'apply': ['partner', 'apply'],
+  'pricing': ['pricing', null]
 };
 
 function route() {
@@ -1442,6 +1586,20 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
     document.head.appendChild(s);
   }
   /* 키 미설정 시: fallback 안내가 그대로 노출됩니다. */
+})();
+
+/* ===== 요금 안내 탭 (개별 구매 / 정기 구독) — 섹션 로컬 상태, 라우터와 무관 ===== */
+(function () {
+  const tabs = document.getElementById('pr-tabs');
+  if (!tabs) return;
+  const panels = document.querySelectorAll('.pr-tab-panel');
+  tabs.addEventListener('click', e => {
+    const btn = e.target.closest('.mf-tab');
+    if (!btn) return;
+    const target = btn.dataset.prTab;
+    tabs.querySelectorAll('.mf-tab').forEach(t => t.classList.toggle('active', t === btn));
+    panels.forEach(p => { p.hidden = p.dataset.prPanel !== target; });
+  });
 })();
 
 /* ===== FAQ 아코디언 ===== */
