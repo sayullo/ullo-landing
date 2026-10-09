@@ -819,7 +819,7 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
         <div class="how-step reveal">
           <div class="step-num">03</div>
           <h3>방문하고 운동</h3>
-          <p>예약 시간에 방문해 체크인하면 끝. 쓰지 않은 크레딧은 다음 달로 이월됩니다.</p>
+          <p>예약 시간에 방문해 체크인하면 끝. 개별 구매 크레딧은 90일, 월구독 크레딧은 30일 이내에 사용하면 됩니다.</p>
         </div>
       </div>
     </div>
@@ -849,11 +849,11 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
         </div>
         <div class="faq-item">
           <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">크레딧은 어떻게 써요?</span><span class="q-toggle">+</span></button>
-          <div class="faq-a"><p>앱에서 원하는 시설이랑 시간대를 골라 예약하면 크레딧이 차감돼요. 1크레딧은 3,000원 상당이고, 수업마다 소요 크레딧이 달라요. 구독권으로 매달 충전하거나, 필요할 때 개별로 충전할 수도 있어요.</p></div>
+          <div class="faq-a"><p>앱에서 원하는 시설이랑 시간대를 골라 예약하면 크레딧이 차감돼요. 1크레딧은 3,000원 상당이고, 수업마다 소요 크레딧이 달라요. 월구독으로 매달 충전하거나, 필요할 때 개별로 충전할 수도 있어요.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span class="q-mark">Q.</span><span class="q-text">구독이나 약정이 있나요?</span><span class="q-toggle">+</span></button>
-          <div class="faq-a"><p>구독권이랑 개별 충전 중에 편한 걸 고르면 돼요. 구독권은 매달 자동으로 결제되지만 약정은 없어서 언제든지 해지할 수 있어요. 자동 결제가 부담스러우면 필요할 때만 충전하는 개별 구매도 있어요.</p></div>
+          <div class="faq-a"><p>월구독이랑 개별 충전 중에 편한 걸 고르면 돼요. 월구독은 매달 자동으로 결제되지만 약정은 없어서 언제든지 해지할 수 있어요. 자동 결제가 부담스러우면 필요할 때만 충전하는 개별 구매도 있어요.</p></div>
         </div>
       </div>
     </div>
@@ -1092,11 +1092,11 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
     <div class="inner">
       <div class="sec-tag reveal">Pricing</div>
       <h2 class="sec-title reveal">필요한 만큼,<br>크레딧으로 시작하세요</h2>
-      <p class="sec-sub reveal">1크레딧은 3,000원 상당이며, 수업마다 소요 크레딧이 달라요. 필요할 때만 개별로 구매하거나 정기 구독으로 매달 자동 충전할 수 있어요.</p>
+      <p class="sec-sub reveal">1크레딧은 3,000원 상당이며, 수업마다 소요 크레딧이 달라요. 필요할 때만 개별로 구매하거나 월구독으로 매달 자동 충전할 수 있어요.</p>
 
       <div class="mf-tabs pr-tabs reveal" id="pr-tabs">
         <button type="button" class="mf-tab active" data-pr-tab="onetime">개별 구매</button>
-        <button type="button" class="mf-tab" data-pr-tab="subscription">정기 구독</button>
+        <button type="button" class="mf-tab" data-pr-tab="subscription">월구독</button>
       </div>
 
       <!-- 개별 구매 -->
@@ -1135,50 +1135,51 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
         </div>
         <div class="pr-note">
           <strong>유효기간 안내</strong><br>
-          개별 구매한 크레딧은 구매일로부터 60일간 이월되어 사용할 수 있어요.<br>
-          유효기간 만료 7일 전 앱 푸시로 미리 알려드려요.<br>
+          개별 구매한 크레딧은 구매일로부터 90일간 이월되어 사용할 수 있어요.<br>
+          90일이 지나도록 쓰지 않은 크레딧은 자동으로 소멸되며, 만료 7일 전 앱 푸시로 미리 알려드려요.<br>
           ※ 이용 횟수는 요가 1회 기준이며, 카테고리마다 차감 크레딧이 달라요.
         </div>
         <!-- Bronze, Max 플랜은 추후 "더보기"로 확장 가능하도록 카드 목록 구조를 유지 -->
       </div>
 
-      <!-- 정기 구독 -->
+      <!-- 월구독 -->
       <div class="pr-tab-panel reveal" data-pr-panel="subscription" hidden>
         <div class="uv-grid">
           <div class="uv-card pr-card">
             <div class="uv-num">STARTER</div>
             <div class="pr-freq">요가·필라테스 월 3~4회</div>
             <div class="pr-credit">월 25크레딧</div>
-            <div class="pr-price-row"><span class="pr-price-old">75,000원</span><span class="pr-discount">5% 할인</span></div>
-            <div class="pr-price">71,250원<span>/ 월</span></div>
-            <div class="pr-per-credit">1크레딧당 2,850원</div>
+            <div class="pr-price-row"><span class="pr-price-old">75,000원</span><span class="pr-discount">10% 할인</span></div>
+            <div class="pr-price">67,500원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,700원</div>
             <p>주 1회 꾸준히 운동을 시작하고 싶은 분들을 위한 구성이에요.</p>
-            <span class="pr-method">구독 · 매달 자동 결제</span>
+            <span class="pr-method">월구독 · 매달 자동 결제</span>
           </div>
           <div class="uv-card pr-card pr-featured">
             <div class="pr-plan-row"><div class="uv-num">BASIC</div><span class="pr-badge-inline">가장인기</span></div>
             <div class="pr-freq">요가·필라테스 월 5회</div>
             <div class="pr-credit">월 35크레딧</div>
-            <div class="pr-price-row"><span class="pr-price-old">105,000원</span><span class="pr-discount">7% 할인</span></div>
-            <div class="pr-price">97,650원<span>/ 월</span></div>
-            <div class="pr-per-credit">1크레딧당 2,790원</div>
+            <div class="pr-price-row"><span class="pr-price-old">105,000원</span><span class="pr-discount">12% 할인</span></div>
+            <div class="pr-price">92,400원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,640원</div>
             <p>주 1~2회 규칙적으로 운동하는 분들을 위한 구성이에요.</p>
-            <span class="pr-method">구독 · 매달 자동 결제</span>
+            <span class="pr-method">월구독 · 매달 자동 결제</span>
           </div>
           <div class="uv-card pr-card">
             <div class="uv-num">PLUS</div>
             <div class="pr-freq">요가·필라테스 월 8~9회</div>
             <div class="pr-credit">월 60크레딧</div>
-            <div class="pr-price-row"><span class="pr-price-old">180,000원</span><span class="pr-discount">9% 할인</span></div>
-            <div class="pr-price">163,800원<span>/ 월</span></div>
-            <div class="pr-per-credit">1크레딧당 2,730원</div>
+            <div class="pr-price-row"><span class="pr-price-old">180,000원</span><span class="pr-discount">14% 할인</span></div>
+            <div class="pr-price">154,800원<span>/ 월</span></div>
+            <div class="pr-per-credit">1크레딧당 2,580원</div>
             <p>주 2~3회 활발하게 운동하는 분들을 위한 구성이에요.</p>
-            <span class="pr-method">구독 · 매달 자동 결제</span>
+            <span class="pr-method">월구독 · 매달 자동 결제</span>
           </div>
         </div>
         <div class="pr-note">
           <strong>유효기간 안내</strong><br>
-          정기 구독은 매월 충전되는 크레딧이 충전일로부터 90일간 유효해요.<br>
+          월구독은 매달 충전되는 크레딧이 충전일로부터 30일간 유효해요.<br>
+          30일 내에 쓰지 않은 크레딧은 자동으로 소멸되니, 매달 받은 크레딧은 그달 안에 사용해주세요.<br>
           구독을 해지하면 남은 크레딧은 해지일로부터 15일 후 소멸돼요.<br>
           ※ 이용 횟수는 요가 1회 기준이며, 카테고리마다 차감 크레딧이 달라요.
         </div>
@@ -1194,7 +1195,7 @@ footer{background:var(--bg-section);border-top:1px solid var(--border-default);p
             <tr><td>크레딧 미사용</td><td>구매일로부터 7일 이내 신청 시 전액 환불</td></tr>
             <tr><td>크레딧 일부 사용</td><td>사용한 크레딧 금액을 차감한 잔여 크레딧만 환불</td></tr>
             <tr><td>유효기간 경과</td><td>소멸된 크레딧은 환불 대상에서 제외</td></tr>
-            <tr><td>구독 정기결제 해지</td><td>다음 결제일 전까지 해지 시 추가 결제 없이 즉시 해지, 이미 충전된 크레딧은 유효기간까지 사용 가능</td></tr>
+            <tr><td>월구독 해지</td><td>다음 결제일 전까지 해지 시 추가 결제 없이 즉시 해지, 이미 충전된 크레딧은 해지일로부터 15일간 사용 후 소멸</td></tr>
           </tbody>
         </table>
       </div>
@@ -1607,7 +1608,7 @@ bindForm('partner-form', 'partner-success', 'partner_inquiries', f => ({
   /* 키 미설정 시: fallback 안내가 그대로 노출됩니다. */
 })();
 
-/* ===== 요금 안내 탭 (개별 구매 / 정기 구독) — 섹션 로컬 상태, 라우터와 무관 ===== */
+/* ===== 요금 안내 탭 (개별 구매 / 월구독) — 섹션 로컬 상태, 라우터와 무관 ===== */
 (function () {
   const tabs = document.getElementById('pr-tabs');
   if (!tabs) return;
