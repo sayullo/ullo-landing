@@ -424,26 +424,47 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
   .pf-opts .chip{flex:1;padding:0 8px}
   .cmp-plans tbody th{width:72px}
 }
-/* ===== 크레딧 환불 정책 (#refund-policy) ===== */
-.policy{max-width:720px}
-.policy-meta{margin-top:16px;font-size:14px;line-height:1.8;color:var(--text-secondary)}
-.policy-meta a{color:inherit;text-decoration:underline}
-.policy-body{margin-top:32px;border-top:1px solid var(--border-default);word-break:keep-all}
-.policy-art{padding:28px 0;border-bottom:1px solid var(--border-default)}
-.policy-art:last-of-type{border-bottom:none}
-.policy-art h3{margin:0 0 12px;font-size:18px;line-height:1.5;font-weight:700;color:var(--text-primary)}
-.policy-art h3 .no{color:var(--primary);font-weight:800;margin-right:6px}
-.policy-art p{margin:0 0 8px;font-size:15.5px;line-height:1.75;color:var(--text-secondary)}
-.policy-art p:last-child{margin-bottom:0}
-.policy-art p.item{padding-left:1.6em;text-indent:-1.6em}
-.policy-art.is-card{border-bottom:none;padding:8px 0 28px}
-.policy-card{background:var(--primary-bg);border-radius:16px;padding:24px;box-shadow:inset 4px 0 0 var(--primary)}
-.policy-card p{color:var(--text-primary)}
-.policy-path{display:inline-block;text-indent:0;margin-left:2px;padding:1px 8px;border-radius:6px;background:#fff;font-weight:700;color:var(--primary-pressed)} /* 상위 .item의 내어쓰기(text-indent)가 상속되어 글자가 겹치던 문제 방지 */
-.policy-contact{margin-top:8px;padding:28px 24px;border-radius:16px;background:var(--bg-section);text-align:center}
-.policy-contact p{margin:0 0 14px;font-size:15px;color:var(--text-secondary)}
-.policy-copy-hint{display:block;margin-top:10px;font-size:13px;color:var(--text-disabled);min-height:1.4em}
-@media (max-width:600px){.policy-card{padding:20px 18px}.policy-contact .btn{width:100%}}
+/* ===== 크레딧 환불 정책 (#refund-policy) — 사이트 컬러 시스템 v1.2 · Pretendard ===== */
+.rp{max-width:860px;word-break:keep-all;--rp-green:#15803D;--rp-green-bg:#ECFDF3;--rp-red:var(--error-text);--rp-red-bg:#FEF2F2;--rp-orange:#C2410C;--rp-orange-bg:#FFF7ED}
+.rp-sub{margin-top:14px;font-size:14px;line-height:1.8;color:var(--text-secondary)}
+.rp-sub .sep{margin:0 8px;color:var(--border-strong)}
+.rp-tabs{display:flex;gap:4px;margin:36px 0 28px;border-bottom:1px solid var(--border-default);overflow-x:auto}
+.rp-tab{flex:none;min-height:48px;padding:0 18px;border:0;background:none;font-size:15px;font-weight:600;color:var(--text-secondary);cursor:pointer;box-shadow:inset 0 -2px 0 transparent;white-space:nowrap}
+.rp-tab:hover{color:var(--text-primary)}
+.rp-tab[aria-selected="true"]{color:var(--primary);font-weight:700;box-shadow:inset 0 -2px 0 var(--primary)}
+.rp-panel[hidden]{display:none}
+.rp-sec{background:#fff;border-radius:16px;box-shadow:inset 0 0 0 1px var(--border-default);padding:28px 32px;margin-bottom:16px}
+.rp-sec h3{font-size:18px;line-height:1.5;font-weight:700;color:var(--text-primary);padding-bottom:12px;margin-bottom:16px;border-bottom:1px solid var(--border-default)}
+.rp p,.rp li,.rp td{font-size:15px;line-height:1.75;color:var(--text-secondary)}
+.rp strong{color:var(--text-primary);font-weight:700}
+.rp-callout{margin:14px 0;padding:14px 18px;border-radius:12px;background:var(--primary-bg);box-shadow:inset 4px 0 0 var(--primary);font-size:15px;line-height:1.75;color:var(--text-secondary)}
+.rp-callout strong{color:var(--primary)}
+.rp-callout.green{background:var(--rp-green-bg);box-shadow:inset 4px 0 0 var(--rp-green)}.rp-callout.green strong{color:var(--rp-green)}
+.rp-callout.orange{background:var(--rp-orange-bg);box-shadow:inset 4px 0 0 var(--rp-orange)}.rp-callout.orange strong{color:var(--rp-orange)}
+.rp-callout.red{background:var(--rp-red-bg);box-shadow:inset 4px 0 0 var(--rp-red)}.rp-callout.red strong{color:var(--rp-red)}
+.rp-tbl{overflow-x:auto;margin:14px 0;border-radius:12px;box-shadow:inset 0 0 0 1px var(--border-default)}
+.rp-tbl table{width:100%;border-collapse:collapse;min-width:520px}
+.rp-tbl th{background:var(--bg-section);color:var(--text-primary);font-size:14px;font-weight:700;text-align:left;padding:12px 16px;white-space:nowrap;border-bottom:1px solid var(--border-default)}
+.rp-tbl td{padding:12px 16px;border-bottom:1px solid var(--border-default);vertical-align:top}
+.rp-tbl tr:last-child td{border-bottom:0}
+.rp-tbl tr.ok td{background:var(--rp-green-bg)}.rp-tbl tr.ng td{background:var(--rp-red-bg)}
+.rp-tbl small{display:block;font-size:13px;color:var(--text-secondary)}
+.rp .g{color:var(--rp-green);font-weight:700}.rp .r{color:var(--rp-red);font-weight:700}.rp .m{color:var(--primary);font-weight:600}
+.rp-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.rp-badge.blue{background:var(--primary-bg);color:var(--primary)}.rp-badge.green{background:var(--rp-green-bg);color:var(--rp-green)}
+.rp-list li{position:relative;padding:9px 0 9px 18px;border-bottom:1px solid var(--border-default)}
+.rp-list li:last-child{border-bottom:0}
+.rp-list li::before{content:"";position:absolute;left:4px;top:20px;width:5px;height:5px;border-radius:50%;background:var(--primary)}
+.rp-steps{display:flex;flex-direction:column;gap:14px}
+.rp-step{display:flex;gap:14px;align-items:flex-start}
+.rp-step-no{flex:none;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rp-step p strong{display:block;margin-bottom:2px}
+.rp-note{margin-top:10px;font-size:13.5px !important}
+.rp-note::before{content:"※ "}
+.rp-legal{margin-top:14px;padding:16px 20px;border-radius:12px;background:var(--bg-section);font-size:14px;line-height:1.75;color:var(--text-secondary)}
+.rp-legal strong{display:block;margin-bottom:4px}
+.rp-ex{display:block;margin-top:6px;font-size:13.5px;color:var(--text-secondary)}
+@media (max-width:600px){.rp-sec{padding:22px 18px}.rp-tab{padding:0 12px;font-size:14.5px}}
 </style>
 </head>
 <body>
@@ -982,7 +1003,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">입점 비용이나 월 고정비가 있나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>없어요. 입점 비용도, 월 고정비도, 광고비도 전부 0원이에요. 이용자가 실제로 방문했을 때만 수수료가 발생하는 구조라서, 방문이 없으면 비용도 없어요.</p></div></div>
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">기존 회원이 ullo로 빠져나가지 않을까요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>걱정 안 하셔도 돼요. ullo는 파트너가 직접 설정한 빈 시간대에만 이용자를 연결해요. 기존 회원 자리는 그대로고, 오히려 ullo로 처음 온 고객이 시설이 마음에 들어 정식 회원이 되는 경우가 더 많을 거예요.</p></div></div>
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">운영 시간대는 나중에 바꿀 수 있나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>언제든지 바꿀 수 있어요. 요일, 시간대, 최대 인원 모두 파트너가 직접 설정하고 자유롭게 조정할 수 있어요. 바쁜 시즌엔 줄이고, 한가한 시즌엔 늘리는 것도 자유예요.</p></div></div>
-        <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">출석 체크는 어떻게 하나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>수업이 끝나고 30분 이내에 파트너센터에서 출석을 체크하면 돼요. 이용자도 앱에서 확인 버튼을 누르면 출석이 확정되고, 그 건이 정산에 반영돼요.</p></div></div>
+        <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">출석 체크는 어떻게 하나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>센터에 비치된 출석 인증 QR 코드를 이용자가 앱으로 스캔하면 출석이 자동으로 처리되고, 그 건이 정산에 반영돼요. 수업 종료 후 30분이 지나도록 QR 인증이 없으면 노쇼로 처리돼요.</p></div></div>
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">고객이 노쇼하면 어떻게 되나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>노쇼가 생겨도 정산액의 50%는 파트너사에 드려요. 그리고 같은 시설에서 노쇼를 3번 이상 반복한 이용자는 예약이 30일간 자동으로 제한돼요.</p></div></div>
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">정산은 언제, 어떻게 받나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>매월 말일 기준으로 출석 확인이 완료된 건들이 정산 대상이 되고, 익월 15일에 등록하신 계좌로 바로 들어와요. 방문 내역이랑 정산 금액은 파트너 대시보드에서 실시간으로 확인할 수 있어요.</p></div></div>
         <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="q-text">수수료 5% 할인은 어떻게 적용되나요?</span><svg class="ic"><use href="#i-plus"/></svg></button><div class="faq-a"><p>첫 예약을 받기 시작한 달부터 1개월간 수수료에서 5%가 자동으로 빠져요. 따로 신청 안 하셔도 돼요.</p></div></div>
@@ -1155,65 +1176,169 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
 
 <!-- ════════════════ VIEW : 크레딧 환불 정책 ════════════════ -->
 <div id="view-refund" class="view" hidden>
-  <section style="padding-top:72px">
-    <div class="wrap policy">
+  <section style="padding-top:72px;padding-bottom:40px">
+    <div class="wrap">
+     <div class="rp">
       <span class="kicker">Policy</span>
-      <h1 class="t-display sm">ullo 크레딧 환불 정책</h1>
-      <p class="policy-meta">운영사: 티지에이컴퍼니 (TGA COMPANY)<br>문의: <a href="mailto:tgacompany@naver.com">tgacompany@naver.com</a></p>
+      <h1 class="t-display sm">환불 정책</h1>
+      <p class="rp-sub">운영사: 티지에이컴퍼니<span class="sep">|</span>사업자등록번호: 131-37-62382<span class="sep">|</span>시행일: 2026년 10월 25일</p>
 
-      <div class="policy-body">
-        <section class="policy-art" aria-labelledby="rp-a1">
-          <h3 id="rp-a1"><span class="no">제1조</span>(크레딧의 성격)</h3>
-          <p class="item">① ullo 크레딧은 ullo 플랫폼 내 모든 파트너 시설의 수업 예약에 사용하는 범용 예약 수단입니다.</p>
-          <p class="item">② 크레딧은 특정 시설에 귀속되지 않으며, 모든 파트너 시설에서 공통 사용이 가능합니다.</p>
-          <p class="item">③ 크레딧은 현금이 아니며, 제3자에게 양도할 수 없습니다.</p>
-        </section>
-        <section class="policy-art" aria-labelledby="rp-a2">
-          <h3 id="rp-a2"><span class="no">제2조</span>(개인 플랜 크레딧 환불)</h3>
-          <p class="item">① 개인 플랜 크레딧은 유효기간이 없으며, 미사용 크레딧은 언제든지 환불 신청이 가능합니다.</p>
-          <p class="item">② 환불 금액은 잔여 크레딧 수에 구매 단가를 곱한 금액입니다.</p>
-          <p class="item">③ 사용한 크레딧은 환불 대상에서 제외됩니다.</p>
-          <p class="item">④ 환불은 원결제 수단으로 지급되며, 처리 기간은 영업일 기준 3~5일입니다.</p>
-        </section>
-        <section class="policy-art" aria-labelledby="rp-a3">
-          <h3 id="rp-a3"><span class="no">제3조</span>(구독 플랜 크레딧 환불)</h3>
-          <p class="item">① 해지 신청 시, 당회차 지급 크레딧 중 미사용분을 환불합니다.</p>
-          <p class="item">② 환불 금액은 미사용 크레딧 수에 해당 플랜의 크레딧 단가를 곱한 금액입니다.</p>
-          <p class="item">③ 이미 사용한 크레딧은 환불되지 않습니다.</p>
-          <p class="item">④ 구독 크레딧은 충전일로부터 30일간 유효하며, 기간 내 사용하지 않은 크레딧은 소멸됩니다.</p>
-        </section>
-        <section class="policy-art" aria-labelledby="rp-a4">
-          <h3 id="rp-a4"><span class="no">제4조</span>(환불 제한 사유)</h3>
-          <p>다음의 경우 환불이 제한됩니다.</p>
-          <p class="item">① 사용이 완료된 크레딧</p>
-          <p class="item">② 부정한 방법(이벤트 어뷰징, 이상 결제 등)으로 취득한 크레딧</p>
-          <p class="item">③ 무료로 지급된 프로모션 크레딧</p>
-        </section>
-        <section class="policy-art" aria-labelledby="rp-a5">
-          <h3 id="rp-a5"><span class="no">제5조</span>(파트너 폐업 시 처리)</h3>
-          <p class="item">① 파트너 시설 폐업 시에도 보유한 크레딧의 가치는 유지됩니다.</p>
-          <p class="item">② 이용자는 다른 파트너 시설에서 동일 크레딧을 계속 사용할 수 있습니다.</p>
-          <p class="item">③ 이용 가능한 파트너 시설이 없는 경우, ullo는 잔여 크레딧 전액을 환불합니다.</p>
-        </section>
-        <section class="policy-art is-card" aria-labelledby="rp-a6">
-          <div class="policy-card">
-            <h3 id="rp-a6"><span class="no">제6조</span>(환불 신청 방법)</h3>
-            <p class="item">① 앱 내: <span class="policy-path">마이페이지 → 크레딧 관리 → 환불 신청</span></p>
-            <p class="item">② 이메일: <a href="mailto:tgacompany@naver.com" style="color:inherit;text-decoration:underline">tgacompany@naver.com</a></p>
-            <p class="item">③ 접수 후 영업일 1일 이내 확인 연락 드립니다.</p>
+      <div class="rp-tabs" role="tablist" aria-label="환불 정책 구분">
+        <button type="button" class="rp-tab" role="tab" id="rp-tab-consumer" aria-controls="rp-panel-consumer" aria-selected="true">이용자 환불 정책</button>
+        <button type="button" class="rp-tab" role="tab" id="rp-tab-partner" aria-controls="rp-panel-partner" aria-selected="false" tabindex="-1">파트너(센터) 정산 정책</button>
+      </div>
+
+      <!-- ══ 이용자 ══ -->
+      <div class="rp-panel" id="rp-panel-consumer" role="tabpanel" aria-labelledby="rp-tab-consumer">
+        <div class="rp-sec">
+          <h3>크레딧이란?</h3>
+          <p>ullo 크레딧은 파트너 센터의 수업 예약에 사용하는 결제 단위입니다. 크레딧은 현금이 아니며, 제3자에게 양도할 수 없습니다.</p>
+          <div class="rp-tbl" style="margin-top:16px"><table>
+            <thead><tr><th>구분</th><th>플랜</th><th>유효기간</th></tr></thead>
+            <tbody>
+              <tr><td><span class="rp-badge blue">개별 구매</span></td><td>Bronze · Silver · Gold · Platinum</td><td class="g">유효기간 없음 (소멸 없음)</td></tr>
+              <tr><td><span class="rp-badge green">구독</span></td><td>Starter · Basic · Plus · Max</td><td>구독 갱신일 기준 30일</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="rp-sec">
+          <h3>수업 취소 시 크레딧 환불</h3>
+          <div class="rp-callout green"><strong>기산점:</strong> 수업 시작 예정 시각 기준. 결제 후 7일 이내는 아래 청약철회권 조항을 먼저 확인하세요.</div>
+          <div class="rp-tbl"><table>
+            <thead><tr><th>취소 시점</th><th>돌려받는 크레딧</th><th>비고</th></tr></thead>
+            <tbody>
+              <tr><td>수업 시작 <strong>24시간 이전</strong></td><td class="g">100% 전액 반환</td><td>제한 없음</td></tr>
+              <tr><td>수업 시작 <strong>12~24시간 전</strong></td><td class="m">50% 반환</td><td>나머지 50%는 위약금으로 처리 (파트너 25% + 플랫폼 25%)</td></tr>
+              <tr><td>수업 시작 <strong>12시간 이내 / 노쇼</strong></td><td class="r">반환 없음</td><td>예약 크레딧 전액 위약금 처리 (파트너 50% + 플랫폼 50%)</td></tr>
+              <tr class="ok"><td><strong>파트너 귀책으로 수업 취소</strong></td><td class="g">100% 전액 반환</td><td>파트너 정산 없음. 이용자 전액 반환.</td></tr>
+            </tbody>
+          </table></div>
+          <p class="rp-note">노쇼: 수업 종료 예정 시각으로부터 30분 이내 QR 출석 인증 미완료 상태</p>
+          <p class="rp-note">위약금은 예약에 사용한 크레딧 수를 기준으로 산정됩니다</p>
+        </div>
+
+        <div class="rp-sec">
+          <h3>청약철회권 (법정 권리)</h3>
+          <div class="rp-callout green"><strong>결제일로부터 7일 이내에는 위약금 없이 전액 환불을 요청할 수 있습니다.</strong><br>단, 7일 이내라도 크레딧을 1개 이상 사용한 경우 사용분은 환불 대상에서 제외됩니다.</div>
+          <div class="rp-legal"><strong>근거 법령</strong>전자상거래 등에서의 소비자보호에 관한 법률 제17조 (청약철회 등)</div>
+        </div>
+
+        <div class="rp-sec">
+          <h3>현금 환불 방법 및 금액 계산</h3>
+          <p style="margin-bottom:16px">수업 취소로 인한 환불은 <strong>크레딧 반환</strong>이 원칙입니다. 아래의 경우에만 현금 환불을 신청할 수 있습니다.</p>
+          <div class="rp-tbl"><table>
+            <thead><tr><th>현금 환불 가능 케이스</th><th>환불 금액 계산</th><th>신청 방법</th></tr></thead>
+            <tbody>
+              <tr><td>개별 크레딧 — 미사용분 전체 환불</td><td rowspan="3">잔여 크레딧 × <strong>가중평균단가</strong><small>− 결제 수수료 차감</small></td><td rowspan="2">앱 마이페이지 → 크레딧 관리 → 환불 신청<br>또는 tgacompany@naver.com</td></tr>
+              <tr><td>구독 해지 후 — 미사용 크레딧 환불</td></tr>
+              <tr><td>서비스 종료 / 이용 가능 파트너 없음</td><td>플랫폼에서 일괄 처리</td></tr>
+            </tbody>
+          </table></div>
+          <div class="rp-callout" style="margin-top:14px"><strong>가중평균단가란?</strong><br>잔여 크레딧 전체에 지불한 금액을 잔여 크레딧 수로 나눈 값입니다. 구매할 때마다 자동 갱신되며, 할인 플랜과 정가 플랜을 혼합 구매한 경우에도 정확하게 반영됩니다.<span class="rp-ex">예) 개별 플랜과 구독 플랜을 함께 구매했다면, 두 결제 금액의 합을 잔여 크레딧 수로 나눈 평균 단가로 환불 금액을 계산하고, 결제 수수료를 차감해 지급합니다.</span></div>
+          <p class="rp-note">현금 환불 처리 기간: 신청 후 영업일 3~5일</p>
+        </div>
+
+        <div class="rp-sec">
+          <h3>크레딧 차감 순서 및 유효기간</h3>
+          <ul class="rp-list">
+            <li>개별 크레딧과 구독 크레딧을 함께 보유한 경우, <strong>만료 임박한 구독 크레딧이 먼저 차감</strong>됩니다.</li>
+            <li>구독 크레딧 유효기간은 구독 갱신일 기준 30일입니다.</li>
+            <li>수업 취소로 반환된 구독 크레딧은 기존 만료일까지 유효합니다.</li>
+            <li>단, 만료까지 <strong>7일 이내</strong>인 경우 반환일로부터 7일을 추가 연장합니다. (횟수 제한: 1회)</li>
+          </ul>
+        </div>
+
+        <div class="rp-sec">
+          <h3>환불이 제한되는 경우</h3>
+          <ul class="rp-list">
+            <li>이미 수업을 이용 완료한 크레딧</li>
+            <li>이벤트·프로모션으로 <strong>무료 지급</strong>된 크레딧 (현금 환불 불가, 수업 예약에만 사용 가능)</li>
+            <li>부정한 방법(어뷰징, 이상 결제 등)으로 취득한 크레딧</li>
+            <li>유효기간이 만료되어 소멸된 구독 크레딧</li>
+          </ul>
+        </div>
+
+        <div class="rp-sec">
+          <h3>이의제기 및 문의</h3>
+          <div class="rp-steps">
+            <div class="rp-step"><span class="rp-step-no">1</span><p><strong>이의 접수</strong>수업 종료일로부터 3영업일 이내, 앱 내 1:1 문의 또는 tgacompany@naver.com으로 접수</p></div>
+            <div class="rp-step"><span class="rp-step-no">2</span><p><strong>증빙 자료 제출</strong>방문 사진, 파트너 확인 메시지, 결제 내역 등</p></div>
+            <div class="rp-step"><span class="rp-step-no">3</span><p><strong>처리 결과 통보</strong>접수 후 5영업일 이내 이메일 통보</p></div>
           </div>
-        </section>
-        <section class="policy-art" aria-labelledby="rp-a7">
-          <h3 id="rp-a7"><span class="no">제7조</span>(소비자 보호)</h3>
-          <p>본 정책은 전자상거래 등에서의 소비자보호에 관한 법률 및 콘텐츠산업진흥법 관련 규정을 준수합니다.</p>
-        </section>
+        </div>
+
+        <div class="rp-legal" style="margin-top:8px"><strong>소비자 분쟁 해결 기준 안내</strong>본 정책은 전자상거래 등에서의 소비자보호에 관한 법률 및 콘텐츠산업 진흥법 관련 규정을 준수합니다. 분쟁 해결이 되지 않을 경우 공정거래위원회 또는 한국소비자원에 분쟁 조정을 신청할 수 있습니다.</div>
       </div>
 
-      <div class="policy-contact">
-        <p>환불 관련 문의는 아래 이메일로 보내주세요.</p>
-        <button type="button" class="btn btn-primary" id="rp-copy" data-email="tgacompany@naver.com" aria-describedby="rp-copy-hint">tgacompany@naver.com 복사</button>
-        <span class="policy-copy-hint" id="rp-copy-hint" aria-live="polite">버튼을 누르면 이메일 주소가 복사됩니다.</span>
+      <!-- ══ 파트너 ══ -->
+      <div class="rp-panel" id="rp-panel-partner" role="tabpanel" aria-labelledby="rp-tab-partner" hidden>
+        <div class="rp-sec">
+          <h3>정산 기본 원칙</h3>
+          <div class="rp-callout"><strong>정산 기준금액</strong> = 예약 크레딧 수 × 크레딧 명목가치<br><strong>파트너 정산금</strong> = 정산 기준금액 × 정산비율 × 80% (플랫폼 수수료 20% 제외)<span class="rp-ex">결제 수수료는 플랫폼이 부담합니다.</span></div>
+        </div>
+
+        <div class="rp-sec">
+          <h3>취소 시점별 파트너 정산 기준</h3>
+          <div class="rp-tbl"><table>
+            <thead><tr><th>취소 시점</th><th>이용자 반환</th><th>파트너 정산비율</th><th>파트너 정산금 산식</th><th>ullo 수취</th></tr></thead>
+            <tbody>
+              <tr><td>수업 시작 <strong>24시간 이전</strong></td><td class="g">100%</td><td>0%</td><td>정산 없음</td><td>0%</td></tr>
+              <tr><td>수업 시작 <strong>12~24시간 전</strong></td><td>50%</td><td class="m">25%</td><td>기준금액 × 25% × 80%</td><td>25%</td></tr>
+              <tr><td>수업 시작 <strong>12시간 이내</strong></td><td class="r">0%</td><td class="m">50%</td><td>기준금액 × 50% × 80%</td><td>50%</td></tr>
+              <tr><td><strong>노쇼</strong> (자동 처리)</td><td class="r">0%</td><td class="m">50%</td><td>기준금액 × 50% × 80%</td><td>50%</td></tr>
+              <tr class="ok"><td><strong>이용 완료</strong></td><td>0%</td><td class="g">100%</td><td>기준금액 × 100% × 80%</td><td>수수료(20%)만</td></tr>
+              <tr class="ng"><td><strong>파트너 귀책 취소</strong></td><td class="g">100%</td><td class="r">0%</td><td>정산 없음</td><td>0%</td></tr>
+            </tbody>
+          </table></div>
+          <p class="rp-note">예시: 정산 기준금액 100,000원인 예약이 12시간 이내 취소된 경우 → 100,000 × 50% × 80% = 40,000원 정산</p>
+        </div>
+
+        <div class="rp-sec">
+          <h3>노쇼 처리 기준 및 파트너 의무</h3>
+          <div class="rp-callout orange"><strong>노쇼 정의:</strong> 수업 종료 예정 시각으로부터 30분이 경과할 때까지 이용자의 QR 출석 인증(센터에 비치된 QR 코드를 앱으로 스캔)이 완료되지 않은 상태. 시스템이 자동 처리합니다.</div>
+          <p style="margin:14px 0 6px"><strong>파트너 필수 의무</strong></p>
+          <ul class="rp-list">
+            <li>센터 전용 <strong>출석 인증 QR 코드</strong>를 이용자가 스캔하기 쉬운 곳(데스크·입구 등)에 비치</li>
+            <li>QR 코드 훼손·미비치 등으로 출석 인증이 어려운 경우 <strong>수업 종료 후 30분 이내</strong> 플랫폼에 알릴 것</li>
+            <li>QR 미비치·방치로 출석 인증이 이뤄지지 않은 경우 파트너 귀책 노쇼로 간주되어 정산 대상에서 제외될 수 있음</li>
+          </ul>
+          <div class="rp-callout red" style="margin-top:14px"><strong>주의:</strong> QR 미비치 등 파트너 사유로 출석 인증이 되지 않아 이용자 이의제기가 발생한 경우, 파트너가 입증 책임을 집니다. 이용자 이의제기 접수 시 3영업일 이내 플랫폼의 확인 요청에 응해야 합니다.</div>
+        </div>
+
+        <div class="rp-sec">
+          <h3>파트너 귀책 판단 기준</h3>
+          <div class="rp-tbl"><table>
+            <thead><tr><th>구분</th><th>귀책 인정</th><th>귀책 미인정</th></tr></thead>
+            <tbody>
+              <tr><td style="width:120px">수업 취소</td><td>12시간 이내 일방 취소</td><td>천재지변·불가항력 (사전 통보 완료)</td></tr>
+              <tr><td>강사 변경</td><td>이용자 동의 없이 무단 교체</td><td>이용자 사전 동의 후 교체</td></tr>
+              <tr><td>수업 시간</td><td>예정 대비 50% 이상 단축</td><td>10분 미만 지연 시작</td></tr>
+              <tr><td>수업 내용</td><td>고지 내용과 현저히 다르게 진행</td><td>난이도 조정 등 소폭 변경</td></tr>
+            </tbody>
+          </table></div>
+          <div class="rp-callout red" style="margin-top:14px"><strong>반복 귀책 패널티:</strong> 동일 파트너의 귀책 취소가 월 2회 이상 발생하는 경우 파트너계약서 규정에 따른 경고 및 계약 해지 절차가 진행됩니다.</div>
+        </div>
+
+        <div class="rp-sec">
+          <h3>정산 주기 및 방법</h3>
+          <ul class="rp-list">
+            <li><strong>정산 기준:</strong> 매월 1일 ~ 말일 이용 완료 수업</li>
+            <li><strong>정산 지급일:</strong> 익월 15일 (영업일 기준)</li>
+            <li><strong>정산 내역 확인:</strong> 파트너 앱 대시보드</li>
+            <li><strong>세금계산서:</strong> 과세사업자의 경우 익월 10일 전 발행 요청</li>
+            <li><strong>문의:</strong> tgacompany@naver.com</li>
+          </ul>
+        </div>
+
+        <div class="rp-sec">
+          <h3>파트너 폐업 및 탈퇴 시 처리</h3>
+          <p>파트너 폐업 또는 계약 해지 시, 이용자가 보유한 크레딧은 다른 파트너 시설에서 계속 사용 가능합니다. 이용 가능한 파트너가 없는 경우 플랫폼이 잔여 크레딧 전액을 이용자에게 현금 환불합니다.</p>
+        </div>
+
+        <div class="rp-legal" style="margin-top:8px"><strong>법령 근거</strong>본 정책은 전자상거래 등에서의 소비자보호에 관한 법률, 공정거래위원회 표준약관 및 파트너계약서 별첨 B에 근거합니다. 본 페이지의 파트너 정산 정책은 파트너 전용 기준이며, 이용자 환불 정책과 별도로 적용됩니다.</div>
       </div>
+     </div>
     </div>
   </section>
 </div><!-- /view-refund -->
@@ -1297,24 +1422,24 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 
-/* ===== 환불 정책: 문의 이메일 복사 ===== */
+/* ===== 환불 정책: 이용자 / 파트너 탭 ===== */
 (function () {
-  const btn = document.getElementById('rp-copy');
-  const hint = document.getElementById('rp-copy-hint');
-  if (!btn) return;
-  const fallback = (text) => {
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '-1000px';
-    document.body.appendChild(ta); ta.select();
-    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-    document.body.removeChild(ta); return ok;
+  const tabs = [...document.querySelectorAll('.rp-tab')];
+  if (!tabs.length) return;
+  const select = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
   };
-  btn.addEventListener('click', () => {
-    const email = btn.dataset.email;
-    const done = () => { hint.textContent = email + ' 주소가 복사되었습니다.'; };
-    const fail = () => { hint.textContent = '복사하지 못했습니다. ' + email + ' 주소를 직접 입력해주세요.'; };
-    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(email).then(done, () => (fallback(email) ? done() : fail()));
-    else (fallback(email) ? done() : fail());
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length], true); }
+    });
   });
 })();
 
