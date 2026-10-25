@@ -439,7 +439,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
 .policy-art.is-card{border-bottom:none;padding:8px 0 28px}
 .policy-card{background:var(--primary-bg);border-radius:16px;padding:24px;box-shadow:inset 4px 0 0 var(--primary)}
 .policy-card p{color:var(--text-primary)}
-.policy-path{display:inline-block;padding:1px 8px;border-radius:6px;background:#fff;font-weight:700;color:var(--primary-pressed)}
+.policy-path{display:inline-block;text-indent:0;margin-left:2px;padding:1px 8px;border-radius:6px;background:#fff;font-weight:700;color:var(--primary-pressed)} /* 상위 .item의 내어쓰기(text-indent)가 상속되어 글자가 겹치던 문제 방지 */
 .policy-contact{margin-top:8px;padding:28px 24px;border-radius:16px;background:var(--bg-section);text-align:center}
 .policy-contact p{margin:0 0 14px;font-size:15px;color:var(--text-secondary)}
 .policy-copy-hint{display:block;margin-top:10px;font-size:13px;color:var(--text-disabled);min-height:1.4em}
