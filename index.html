@@ -424,6 +424,26 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
   .pf-opts .chip{flex:1;padding:0 8px}
   .cmp-plans tbody th{width:72px}
 }
+/* ===== 크레딧 환불 정책 (#refund-policy) ===== */
+.policy{max-width:720px}
+.policy-meta{margin-top:16px;font-size:14px;line-height:1.8;color:var(--text-secondary)}
+.policy-meta a{color:inherit;text-decoration:underline}
+.policy-body{margin-top:32px;border-top:1px solid var(--border-default);word-break:keep-all}
+.policy-art{padding:28px 0;border-bottom:1px solid var(--border-default)}
+.policy-art:last-of-type{border-bottom:none}
+.policy-art h3{margin:0 0 12px;font-size:18px;line-height:1.5;font-weight:700;color:var(--text-primary)}
+.policy-art h3 .no{color:var(--primary);font-weight:800;margin-right:6px}
+.policy-art p{margin:0 0 8px;font-size:15.5px;line-height:1.75;color:var(--text-secondary)}
+.policy-art p:last-child{margin-bottom:0}
+.policy-art p.item{padding-left:1.6em;text-indent:-1.6em}
+.policy-art.is-card{border-bottom:none;padding:8px 0 28px}
+.policy-card{background:var(--primary-bg);border-radius:16px;padding:24px;box-shadow:inset 4px 0 0 var(--primary)}
+.policy-card p{color:var(--text-primary)}
+.policy-path{display:inline-block;padding:1px 8px;border-radius:6px;background:#fff;font-weight:700;color:var(--primary-pressed)}
+.policy-contact{margin-top:8px;padding:28px 24px;border-radius:16px;background:var(--bg-section);text-align:center}
+.policy-contact p{margin:0 0 14px;font-size:15px;color:var(--text-secondary)}
+.policy-copy-hint{display:block;margin-top:10px;font-size:13px;color:var(--text-disabled);min-height:1.4em}
+@media (max-width:600px){.policy-card{padding:20px 18px}.policy-contact .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -1095,7 +1115,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
           <p class="t-body" style="margin:0;font-weight:600;color:var(--text-primary)">크레딧 환불 기준이 궁금하신가요?</p>
           <p class="t-small" style="margin:4px 0 0">미사용 크레딧은 언제든지 환불 신청이 가능합니다.</p>
         </div>
-        <a class="btn btn-line btn-sm" href="refund-policy.html">환불 정책 보기<svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-line btn-sm" href="#refund-policy">환불 정책 보기<svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
@@ -1133,6 +1153,71 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
   </section>
 </div><!-- /view-pricing -->
 
+<!-- ════════════════ VIEW : 크레딧 환불 정책 ════════════════ -->
+<div id="view-refund" class="view" hidden>
+  <section style="padding-top:72px">
+    <div class="wrap policy">
+      <span class="kicker">Policy</span>
+      <h1 class="t-display sm">ullo 크레딧 환불 정책</h1>
+      <p class="policy-meta">운영사: 티지에이컴퍼니 (TGA COMPANY)<br>문의: <a href="mailto:tgacompany@naver.com">tgacompany@naver.com</a></p>
+
+      <div class="policy-body">
+        <section class="policy-art" aria-labelledby="rp-a1">
+          <h3 id="rp-a1"><span class="no">제1조</span>(크레딧의 성격)</h3>
+          <p class="item">① ullo 크레딧은 ullo 플랫폼 내 모든 파트너 시설의 수업 예약에 사용하는 범용 예약 수단입니다.</p>
+          <p class="item">② 크레딧은 특정 시설에 귀속되지 않으며, 모든 파트너 시설에서 공통 사용이 가능합니다.</p>
+          <p class="item">③ 크레딧은 현금이 아니며, 제3자에게 양도할 수 없습니다.</p>
+        </section>
+        <section class="policy-art" aria-labelledby="rp-a2">
+          <h3 id="rp-a2"><span class="no">제2조</span>(개인 플랜 크레딧 환불)</h3>
+          <p class="item">① 개인 플랜 크레딧은 유효기간이 없으며, 미사용 크레딧은 언제든지 환불 신청이 가능합니다.</p>
+          <p class="item">② 환불 금액은 잔여 크레딧 수에 구매 단가를 곱한 금액입니다.</p>
+          <p class="item">③ 사용한 크레딧은 환불 대상에서 제외됩니다.</p>
+          <p class="item">④ 환불은 원결제 수단으로 지급되며, 처리 기간은 영업일 기준 3~5일입니다.</p>
+        </section>
+        <section class="policy-art" aria-labelledby="rp-a3">
+          <h3 id="rp-a3"><span class="no">제3조</span>(구독 플랜 크레딧 환불)</h3>
+          <p class="item">① 해지 신청 시, 당회차 지급 크레딧 중 미사용분을 환불합니다.</p>
+          <p class="item">② 환불 금액은 미사용 크레딧 수에 해당 플랜의 크레딧 단가를 곱한 금액입니다.</p>
+          <p class="item">③ 이미 사용한 크레딧은 환불되지 않습니다.</p>
+          <p class="item">④ 구독 크레딧은 충전일로부터 30일간 유효하며, 기간 내 사용하지 않은 크레딧은 소멸됩니다.</p>
+        </section>
+        <section class="policy-art" aria-labelledby="rp-a4">
+          <h3 id="rp-a4"><span class="no">제4조</span>(환불 제한 사유)</h3>
+          <p>다음의 경우 환불이 제한됩니다.</p>
+          <p class="item">① 사용이 완료된 크레딧</p>
+          <p class="item">② 부정한 방법(이벤트 어뷰징, 이상 결제 등)으로 취득한 크레딧</p>
+          <p class="item">③ 무료로 지급된 프로모션 크레딧</p>
+        </section>
+        <section class="policy-art" aria-labelledby="rp-a5">
+          <h3 id="rp-a5"><span class="no">제5조</span>(파트너 폐업 시 처리)</h3>
+          <p class="item">① 파트너 시설 폐업 시에도 보유한 크레딧의 가치는 유지됩니다.</p>
+          <p class="item">② 이용자는 다른 파트너 시설에서 동일 크레딧을 계속 사용할 수 있습니다.</p>
+          <p class="item">③ 이용 가능한 파트너 시설이 없는 경우, ullo는 잔여 크레딧 전액을 환불합니다.</p>
+        </section>
+        <section class="policy-art is-card" aria-labelledby="rp-a6">
+          <div class="policy-card">
+            <h3 id="rp-a6"><span class="no">제6조</span>(환불 신청 방법)</h3>
+            <p class="item">① 앱 내: <span class="policy-path">마이페이지 → 크레딧 관리 → 환불 신청</span></p>
+            <p class="item">② 이메일: <a href="mailto:tgacompany@naver.com" style="color:inherit;text-decoration:underline">tgacompany@naver.com</a></p>
+            <p class="item">③ 접수 후 영업일 1일 이내 확인 연락 드립니다.</p>
+          </div>
+        </section>
+        <section class="policy-art" aria-labelledby="rp-a7">
+          <h3 id="rp-a7"><span class="no">제7조</span>(소비자 보호)</h3>
+          <p>본 정책은 전자상거래 등에서의 소비자보호에 관한 법률 및 콘텐츠산업진흥법 관련 규정을 준수합니다.</p>
+        </section>
+      </div>
+
+      <div class="policy-contact">
+        <p>환불 관련 문의는 아래 이메일로 보내주세요.</p>
+        <button type="button" class="btn btn-primary" id="rp-copy" data-email="tgacompany@naver.com" aria-describedby="rp-copy-hint">tgacompany@naver.com 복사</button>
+        <span class="policy-copy-hint" id="rp-copy-hint" aria-live="polite">버튼을 누르면 이메일 주소가 복사됩니다.</span>
+      </div>
+    </div>
+  </section>
+</div><!-- /view-refund -->
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="wrap">
@@ -1144,7 +1229,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
         <a href="#pricing">요금 안내</a>
         <a href="#booking">사전 예약</a>
         <a href="#partner">파트너 신청</a>
-        <a href="refund-policy.html">환불 정책</a>
+        <a href="#refund-policy">환불 정책</a>
       </div>
     </div>
     <div class="footer-biz">
@@ -1154,7 +1239,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
     <p class="t-small" style="color:var(--text-disabled);margin-top:12px;line-height:1.8">
       ullo는 운동시설을 직접 운영하지 않으며, 파트너 시설과 이용자를 연결하는 예약 중개 플랫폼입니다.<br>
       크레딧은 특정 시설에 귀속되지 않으며, 모든 파트너 센터에서 공통으로 사용 가능합니다.<br>
-      미사용 크레딧은 언제든지 환불 신청이 가능합니다. <a href="refund-policy.html" style="color:inherit;text-decoration:underline">크레딧 환불 정책 보기</a>
+      미사용 크레딧은 언제든지 환불 신청이 가능합니다. <a href="#refund-policy" style="color:inherit;text-decoration:underline">크레딧 환불 정책 보기</a>
     </p>
     <p class="footer-copy">© 2026 티지에이컴퍼니(TGA COMPANY) · sayullo.com</p>
   </div>
@@ -1166,7 +1251,8 @@ const views = {
   home: document.getElementById('view-home'),
   booking: document.getElementById('view-booking'),
   partner: document.getElementById('view-partner'),
-  pricing: document.getElementById('view-pricing')
+  pricing: document.getElementById('view-pricing'),
+  refund: document.getElementById('view-refund')
 };
 /* 해시 → [보여줄 화면, 스크롤 대상 id] */
 const routes = {
@@ -1180,7 +1266,8 @@ const routes = {
   'find': ['home', 'find'],
   'partner': ['partner', null],
   'apply': ['partner', 'apply'],
-  'pricing': ['pricing', null]
+  'pricing': ['pricing', null],
+  'refund-policy': ['refund', null]
 };
 let onViewShown = null;
 
@@ -1209,6 +1296,27 @@ function route() {
   }
 }
 window.addEventListener('hashchange', route);
+
+/* ===== 환불 정책: 문의 이메일 복사 ===== */
+(function () {
+  const btn = document.getElementById('rp-copy');
+  const hint = document.getElementById('rp-copy-hint');
+  if (!btn) return;
+  const fallback = (text) => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '-1000px';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta); return ok;
+  };
+  btn.addEventListener('click', () => {
+    const email = btn.dataset.email;
+    const done = () => { hint.textContent = email + ' 주소가 복사되었습니다.'; };
+    const fail = () => { hint.textContent = '복사하지 못했습니다. ' + email + ' 주소를 직접 입력해주세요.'; };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(email).then(done, () => (fallback(email) ? done() : fail()));
+    else (fallback(email) ? done() : fail());
+  });
+})();
 
 /* ===== 수익 시뮬레이터 ===== */
 const CREDIT_PRICE = 3000; /* 내부 계산 기준 단가 (화면에는 노출하지 않음) */
