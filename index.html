@@ -30,6 +30,7 @@
   --focus-ring:0 0 0 3px rgba(0,100,255,0.3);
   --wrap:1200px;
   --gutter:40px;
+  --sec-y:80px; /* 섹션 위·아래 여백 */
 }
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:var(--text-primary);background:var(--bg-default);-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;font-size:16px;line-height:1.7;letter-spacing:-0.01em}
@@ -72,7 +73,13 @@ ul,ol{list-style:none}
 .pill-gray{background:var(--bg-section);color:var(--text-secondary)}
 
 /* ── 섹션 ── */
-section{padding:112px 0;scroll-margin-top:64px}
+/* 섹션 여백 체계 — 모든 섹션 위·아래 동일(--sec-y), 섹션 제목→내용 48px */
+section{padding:var(--sec-y) 0;scroll-margin-top:64px}
+/* 같은 배경(흰색·흰색 / 회색·회색) 섹션이 이어지면 위 여백을 생략해 간격이 두 배로 벌어지지 않게 한다 (사이에 숨긴 섹션이 있어도 동일) */
+.view > section:not(.sec-gray):not([hidden]) + section:not(.sec-gray):not([hidden]),
+.view > section:not(.sec-gray):not([hidden]) + section[hidden] + section:not(.sec-gray):not([hidden]),
+.view > section.sec-gray:not([hidden]) + section.sec-gray:not([hidden]),
+.view > section.sec-gray:not([hidden]) + section[hidden] + section.sec-gray:not([hidden]){padding-top:0}
 .sec-gray{background:var(--bg-section)}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px 48px;flex-wrap:wrap;margin-bottom:48px}
 .sec-head .t-lead{margin-top:14px}
@@ -197,7 +204,7 @@ nav.gnb{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.92);bac
 .cmp tbody th{font-size:14px;font-weight:600;color:var(--text-secondary);width:150px;padding-left:0}
 .cmp td.old{color:var(--text-secondary)}
 .cmp td.us{font-weight:600;background:rgba(0,100,255,0.035)}
-.quote{margin-top:56px;font-size:26px;line-height:1.5;font-weight:600;letter-spacing:-0.025em;text-wrap:balance}
+.quote{margin-top:48px;font-size:26px;line-height:1.5;font-weight:600;letter-spacing:-0.025em;text-wrap:balance}
 .quote b{color:var(--primary);font-weight:700}
 
 /* ── 사전 예약 밴드 ── */
@@ -241,7 +248,7 @@ nav.gnb{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.92);bac
 .sim-out .btn{align-self:flex-start;margin-top:28px}
 
 /* ── 최종 CTA ── */
-.final{text-align:center;padding:120px 0}
+.final{text-align:center}
 .final .t-h2{font-size:40px}
 .final .t-lead{margin:14px auto 0}
 .final .row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:32px}
@@ -392,8 +399,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
   .stat:nth-child(n+3){border-top:1px solid var(--border-default)}
 }
 @media(max-width:720px){
-  :root{--gutter:20px}
-  section{padding:80px 0}
+  :root{--gutter:20px;--sec-y:56px}
   .gnb-in{gap:12px}
   .gnb-links{display:none}
   .gnb-cta{margin-left:auto}
@@ -616,7 +622,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
   </section>
 
   <!-- 비교 -->
-  <section class="sec-gray" style="padding-top:96px">
+  <section class="sec-gray">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -1145,7 +1151,7 @@ footer{border-top:1px solid var(--border-default);padding:48px 0 40px}
     </div>
   </section>
 
-  <section class="final" style="padding-top:40px">
+  <section class="final">
     <div class="wrap">
       <h2 class="t-h2">지금 예약하면, 시작이 공짜입니다</h2>
       <p class="t-lead">사전 예약 후 가입 시 무료 크레딧 증정 — 출시 소식도 가장 먼저 받아보세요.</p>
